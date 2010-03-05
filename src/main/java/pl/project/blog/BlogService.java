@@ -12,17 +12,18 @@ public interface BlogService {
     /**
      * Metoda zwraca listę wszystkich postów
      *
+     * @param initializeCollections określa czy kolekcje mają być również
+     *          dołączone
      * @return
      */
-    List<Post> listPosts();
+    List<Post> listPosts(Boolean initializeCollections);
 
     /**
      * Metoda dodaje nowy post.
      * 
-     * @param title
-     * @param content
+     * @param post
      * @return
      */
-    Post createPost(String title, String content);
+    Post createPost(Post post);
 
 }

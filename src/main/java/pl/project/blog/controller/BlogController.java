@@ -1,5 +1,6 @@
 package pl.project.blog.controller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class BlogController {
      */
     @RequestMapping("/home")
     public String showHome(ModelMap model) {
-        model.addAttribute("posts", blogService.listPosts());
+        model.addAttribute("posts", blogService.listPosts(false));
 
         return "blog";
     }
@@ -60,7 +61,7 @@ public class BlogController {
     public ModelAndView createNew(
             HttpServletRequest request,
             @RequestParam(value = "ajax", required = false) String ajax,
-            @ModelAttribute("newObject") Post postCommand, BindingResult bindingResult) {
+            @ModelAttribute("newObject") Post post, BindingResult bindingResult) {
 
 
 //        ValidationUtils.invokeValidator(newObjectCommandValidator, postCommand, bindingResult);
@@ -75,9 +76,8 @@ public class BlogController {
 //            }
 //        }
 
-        log.debug("Request value is {}, creating {}", request.getParameter("name"), postCommand);
-
-        blogService.createPost(postCommand.getTitle(), postCommand.getContent());
+        post.setCreateDate(new Date());
+        blogService.createPost(post);
 
         if (ajax != null) {
             Map m = new HashMap();

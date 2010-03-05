@@ -21,7 +21,7 @@
         <constructor-arg value="localhost"/>
     </bean>
 
-    <bean id="systemDatabase" class="org.jcouchdb.db.Database">
+    <bean id="database" class="org.jcouchdb.db.Database">
         <constructor-arg ref="couchDBServer"/>
         <constructor-arg value="blog"/>
         <property name="jsonConfig" ref="jsonConfig"/>

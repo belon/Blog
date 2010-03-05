@@ -16,6 +16,8 @@
     <dl class="clear">
         <dt>Title</dt>
         <dd><form:input path="title"/><br/></dd>
+        <dt>Author</dt>
+        <dd><form:input path="author"/><br/></dd>
         <dt>Content</dt>
         <dd>
             <form:textarea path="content"

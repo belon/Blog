@@ -5,9 +5,9 @@ import org.svenson.ClassNameBasedTypeMapper;
 import org.svenson.JSON;
 import org.svenson.JSONConfig;
 import org.svenson.JSONParser;
-import org.svenson.converter.DateConverter;
 import org.svenson.converter.DefaultTypeConverterRepository;
 import org.svenson.matcher.SubtypeMatcher;
+import pl.project.blog.converter.DateConverter;
 
 /**
  * Creates a project global JSON config.

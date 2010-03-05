@@ -15,6 +15,19 @@
                 <c:forEach var="curPost" items="${posts}">
                     <h1>${curPost.title}</h1>
                     <h3>${curPost.content}</h3>
+                    <h3>${curPost.createDate}</h3>
+                    <div>
+                        Tagi: 
+                        <c:forEach var="tag" items="${curPost.tags}">
+                            ${tag.name} &nbsp;
+                        </c:forEach>
+                    </div>
+                    <div>
+                        Komentarze:<br />
+                        <c:forEach var="comment" items="${curPost.comments}">
+                            ${comment.content} Autor: ${comment.author} Dodano: ${comment.created}<br />
+                        </c:forEach>
+                    </div>
                 </c:forEach>
             </div>
             <div>
