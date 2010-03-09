@@ -2,6 +2,7 @@ package pl.project.blog;
 
 import java.util.List;
 import pl.project.blog.domain.Post;
+import pl.project.blog.domain.User;
 
 /**
  *
@@ -16,7 +17,7 @@ public interface BlogService {
      *          dołączone
      * @return
      */
-    List<Post> listPosts(Boolean initializeCollections);
+    public List<Post> listPosts(Boolean initializeCollections);
 
     /**
      * Metoda dodaje nowy post.
@@ -24,6 +25,15 @@ public interface BlogService {
      * @param post
      * @return
      */
-    Post createPost(Post post);
+    public Post createPost(Post post);
+
+    /**
+     * Metoda pobiera użytkownika o danej nazwie.
+     * Jeśli użytkownika nie ma w bazie to zwraca null.
+     * 
+     * @param userName
+     * @return
+     */
+    public User getUser(String userName);
 
 }

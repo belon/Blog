@@ -14,4 +14,14 @@
             <goal>jetty:stop</goal>
         </goals>
     </action>
+    <action>
+            <actionName>CUSTOM-jetty:debug</actionName>
+            <displayName>jetty:debug</displayName>
+            <goals>
+                <goal>jetty:run</goal>
+            </goals>
+            <properties>
+                <jpda.listen>maven</jpda.listen>
+            </properties>
+        </action>
 </actions>

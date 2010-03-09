@@ -14,6 +14,7 @@ public class Comment extends AppDocument implements Comparable<Comment> {
     //
     String content;
     String author;
+    String email;
     Date created;
 
     public String getAuthor() {
@@ -47,6 +48,14 @@ public class Comment extends AppDocument implements Comparable<Comment> {
 
     public void setPost_id(String post_id) {
         this.post_id = post_id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public int compareTo(Comment o) {

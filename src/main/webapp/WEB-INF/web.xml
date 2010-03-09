@@ -6,6 +6,19 @@
 
     <display-name>Blog</display-name>
 
+    <!-- Konfiguracja Spring Security -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>
+            org.springframework.web.filter.DelegatingFilterProxy
+        </filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
     <listener>
         <listener-class>
             org.springframework.web.context.ContextLoaderListener
@@ -16,6 +29,7 @@
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>
+            /WEB-INF/config/security-config.xml
             /WEB-INF/config/couchdb-config.xml
             /WEB-INF/config/couchdb-services.xml
             /WEB-INF/config/services-config.xml

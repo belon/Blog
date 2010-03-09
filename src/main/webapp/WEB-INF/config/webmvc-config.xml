@@ -20,6 +20,26 @@
     </bean>
 
     <bean id="handlerAdapter" class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    
+    <!-- Enable annotation-based validation using Bean Validation Framework -->
+    <bean id="configurationLoader"
+          class="org.springmodules.validation.bean.conf.loader.annotation.AnnotationBeanValidationConfigurationLoader"/>
+    <bean id="errorCodeConverter" class="pl.project.blog.converter.MyErrorCodeConverter" />
+    <bean id="validator" class="org.springmodules.validation.bean.BeanValidator">
+        <property name="configurationLoader" ref="configurationLoader"/>
+        <property name="errorCodeConverter" ref="errorCodeConverter"/>
+    </bean>
+
+    <!-- Load messages -->
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>classpath:errors</value>
+            </list>
+        </property>
+        <property name="useCodeAsDefaultMessage" value="true"/>
+    </bean>
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/views/" />

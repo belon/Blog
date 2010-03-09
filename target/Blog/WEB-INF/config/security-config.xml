@@ -1,0 +1,31 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-2.0.4.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+    <context:annotation-config />
+
+    <security:http auto-config="true">
+        <security:form-login login-page="/app/login" login-processing-url="/app/login/process" default-target-url="/app/home"
+                             authentication-failure-url="/app/login?login_error=1" />
+        <security:logout logout-url="/app/logout" logout-success-url="/app/home" />
+        <security:intercept-url pattern="/app/admin/**" access="ROLE_ADMIN" />
+        <security:intercept-url pattern="/app/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
+        <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
+        <security:anonymous />
+        <security:http-basic />
+        <security:remember-me/>
+    </security:http>
+
+    <security:authentication-provider user-service-ref="userDetailsService">
+        <security:password-encoder hash="sha-256"/>
+    </security:authentication-provider>
+
+    <bean id="userDetailsService" class="pl.project.blog.auth.UserDetailsServiceImpl">
+        <property name="database" ref="database" />
+    </bean>
+</beans>

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.jcouchdb.db.Database;
+import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
 import org.svenson.JSONProperty;
 import org.svenson.converter.JSONConverter;
 import pl.project.blog.converter.DateConverter;
@@ -14,8 +15,11 @@ import pl.project.blog.converter.DateConverter;
  */
 public class Post extends AppDocument implements Comparable<Post> {
 
+    @NotBlank(errorCode="field.title.required")
     String title;
+    @NotBlank(errorCode="field.content.required")
     String content;
+    @NotBlank(errorCode="field.author.required")
     String author;
     Date createDate;
     Date modifyDate;

@@ -7,6 +7,7 @@
     <head>
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
     </head>
 
     <body>
@@ -33,7 +34,7 @@
             <div>
                 <ul>
                     <li>
-                        <blog:link href="/app/new">Dodaj post...</blog:link>
+                        <blog:link href="/app/admin/newPost">Dodaj post...</blog:link>
                     </li>
                 </ul>
             </div>

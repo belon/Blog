@@ -1,6 +1,7 @@
 package pl.project.blog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +15,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.providers.encoding.ShaPasswordEncoder;
 import org.springframework.util.Assert;
+import pl.project.blog.auth.Roles;
 import pl.project.blog.domain.AppDocument;
 import pl.project.blog.domain.Comment;
 import pl.project.blog.domain.Tag;
+import pl.project.blog.domain.User;
 
 /**
  *
@@ -93,6 +97,19 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         return post;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public User getUser(String userName) {
+        ViewAndDocumentsResult<Object, User> result = database.queryViewAndDocuments("user/byName", Object.class, User.class, new Options().key(userName), null);
+
+        if (result.getRows().size() == 0 || result.getRows().size() > 1) {
+            return null;
+        }
+
+        return result.getRows().get(0).getDocument();
+    }
+
     public void afterPropertiesSet() throws Exception {
         initialize();
     }
@@ -123,6 +140,14 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
 
                 persist(post);
             }
+        }
+
+        if (getUser("admin") == null) {
+            User user = new User();
+            user.setName("admin");
+            user.setPasswordHash(new ShaPasswordEncoder(256).encodePassword("admin", null));
+            user.setRoles(Arrays.asList(Roles.ROLE_ADMIN.getRoleName(), Roles.ROLE_USER.getRoleName()));
+            persist(user);
         }
     }
 
