@@ -1,0 +1,48 @@
+        * {margin:0; padding:0;}
+		.lavaLampWithImage {
+	position: relative;
+	height: 26px;
+	overflow: hidden;
+	margin-right: auto;
+	margin-left: auto;
+	width: 809px;
+	padding-top: 3px;
+	padding-right: 15px;
+	padding-left: 15px;
+        }
+                .lavaLampWithImage li {
+                    float: left;
+                    list-style: none;
+                }
+                    .lavaLampWithImage li.back {
+                        background: url(../images/lavamenu2.png) no-repeat right;
+                        width: 9px; height: 23px;
+                        z-index: 8;
+                        position: absolute;
+                    }
+                        .lavaLampWithImage li.back .left {
+	background: url(../images/lavamenu1.png) no-repeat left;
+	height: 23px;
+	margin-right: 9px;
+                        }
+                    .lavaLampWithImage li a {
+	font: normal 14px "Trebuchet MS", Arial, Halvetica, sans-serif;
+	text-decoration: none;
+	color: #fff;
+	outline: none;
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0;
+	z-index: 10;
+	display: block;
+	float: left;
+	height: 20px;
+	position: relative;
+	overflow: hidden;
+	margin-right: 10px;
+	margin-left: 10px;
+	padding-top: 3px;
+                    }
+                        .lavaLampWithImage li a:hover, .lavaLampWithImage li a:active, .current a,  current a:visited .lavaLampWithImage li a:visited {
+                            border: none;
+                        }
