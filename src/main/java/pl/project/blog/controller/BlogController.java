@@ -122,4 +122,31 @@ public class BlogController {
             return new ModelAndView("redirect:/app/home");
         }
     }
+
+    /**
+     * Strona główna.
+     */
+    @RequestMapping("/index")
+    public String showIndex(ModelMap model) {
+        //model.addAttribute("posts", blogService.listPosts(true));
+        return "index";
+    }
+
+    @RequestMapping("/bloglist")
+    public String showBlogList(ModelMap model) {
+        model.addAttribute("posts", blogService.listPosts(true));
+        return "bloglist";
+    }
+
+    /**
+     * Pobiera komentarze do odpowiedniego posta
+     * @param model
+     * @return
+     */
+    @RequestMapping("/commentlist")
+    public String showComments(ModelMap model) {
+        //model.addAttribute("posts", blogService.listPosts(true));
+        
+        return "commentlist";
+    }
 }
