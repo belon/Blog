@@ -61,7 +61,6 @@
                                 <img src="" alt="gravatar"/>
                                 <img src="" alt="gravatar"/>
                             </div>
-
                             <c:forEach var="curPost" items="${posts}">
                                 <div class="post">
                                     <div class="postheader"> </div>
