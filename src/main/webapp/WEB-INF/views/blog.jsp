@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -9,8 +10,16 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
+        <link href="${pageContext.request.contextPath}/style/blog.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/lavalamp.css" rel="stylesheet" type="text/css" />
-        <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery-1.1.3.1.min.js"></script>
+        <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <%--<script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery-1.1.3.1.min.js"></script>--%>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/blog.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/md5.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.easing.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.lavalamp.min.js"></script>
         <script type="text/javascript">
@@ -24,8 +33,6 @@
                 });
             });
         </script>
-        <!--        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>-->
-
     </head>
 
     <body>
@@ -48,7 +55,12 @@
                     </div>
                     <div id="content">
                         <div id="left">
-
+                            <div id="gravatars">
+                                <img src="" alt="gravatar"/>
+                                <img src="" alt="gravatar"/>
+                                <img src="" alt="gravatar"/>
+                                <img src="" alt="gravatar"/>
+                            </div>
                             <c:forEach var="curPost" items="${posts}">
                                 <div class="post">
                                     <div class="postheader"> </div>
@@ -56,7 +68,7 @@
                                     <div class="postcontent">
                                         <span class="date rightalign">${curPost.createDate}</span>
                                         <div class="pt"><h2>${curPost.title}</h2></div>
-                                        <p>${curPost.content}</p>
+                                        <pre>${curPost.content}</pre>
 
 
                                         <div>
@@ -77,6 +89,9 @@
                                             <li class="permalink"><a href="http://www.free-css.com/">Permalink</a></li>
                                             <li class="category_link"><a href="http://www.free-css.com/">Category</a></li>
                                             <li class="comments_link"><a href="http://www.free-css.com/">25 Komentarzy</a></li>
+                                            <security:authorize ifAllGranted="ROLE_ADMIN">
+                                                <li class="delete_link"><blog:link href="/app/admin/delPost?id=${curPost.id}">Usuń post</blog:link></li>
+                                            </security:authorize>
                                         </ul>
                                     </div>
 
@@ -116,3 +131,9 @@
         </div>
     </body>
 </html>
+
+<script>
+    $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));
+    SyntaxHighlighter.config.stripBrs = true;
+    SyntaxHighlighter.all();
+</script>

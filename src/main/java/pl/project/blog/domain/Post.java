@@ -25,6 +25,8 @@ public class Post extends AppDocument implements Comparable<Post> {
     Date modifyDate;
     List<Comment> comments = new ArrayList<Comment>();
     List<Tag> tags = new ArrayList<Tag>();
+    //
+    List<String> tagIds = new ArrayList<String>();
 
     /**
      * Metoda dodaje komentarz do postu.
@@ -57,9 +59,12 @@ public class Post extends AppDocument implements Comparable<Post> {
             database.createDocument(comment);
         }
         // Zapisz w bazie wszystkie tagi
-        for (Tag tag : tags) {
-            tag.setPost_id(this.getId());
-            database.createDocument(tag);
+        for (String tagId : tagIds) {
+            PostTag postTag = new PostTag();
+            postTag.setPost_id(this.getId());
+            postTag.setTag_id(tagId);
+
+            database.createDocument(postTag);
         }
     }
 
@@ -68,9 +73,9 @@ public class Post extends AppDocument implements Comparable<Post> {
     }
 
     public void setContent(String content) {
-        if (content != null) {
-            content = content.replaceAll("\r\n", "<br />").replaceAll("\n", "<br />");
-        }
+//        if (content != null) {
+//            content = content.replaceAll("\r\n", "<br />").replaceAll("\n", "<br />");
+//        }
         this.content = content;
     }
 
@@ -100,6 +105,14 @@ public class Post extends AppDocument implements Comparable<Post> {
         return comments;
     }
 
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void setTags(List<Tag> tags) {
+        this.tags = tags;
+    }
+
     public Date getCreateDate() {
         return createDate;
     }
@@ -115,6 +128,15 @@ public class Post extends AppDocument implements Comparable<Post> {
 
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
+    }
+
+    @JSONProperty(ignore=true)
+    public List<String> getTagIds() {
+        return tagIds;
+    }
+
+    public void setTagIds(List<String> tagIds) {
+        this.tagIds = tagIds;
     }
 
     public int compareTo(Post o) {

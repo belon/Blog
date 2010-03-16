@@ -1,3 +1,12 @@
 .error {
     color: #ff0033;
 }
+
+#gravatars img {
+    border:1px solid #DDDDDD;
+    margin-right:3px;
+    padding:2px;
+    position:relative;
+    top:-2px;
+    vertical-align:middle;
+}

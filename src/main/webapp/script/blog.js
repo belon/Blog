@@ -86,3 +86,7 @@ function filterFn(field) {
 function getMetaData(name) {
     return $("meta[name=" + name + "]").attr("content")
 }
+
+function getGravatarFor(email) {
+    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48&d=http://" + getMetaData('base_url') + "images/gravatar-48.png";
+}

@@ -3,6 +3,7 @@ package pl.project.blog;
 import java.util.List;
 import pl.project.blog.domain.Comment;
 import pl.project.blog.domain.Post;
+import pl.project.blog.domain.Tag;
 import pl.project.blog.domain.User;
 
 /**
@@ -29,6 +30,29 @@ public interface BlogService {
     public Post createPost(Post post);
 
     /**
+     * Metoda usuwa dokument.
+     *
+     * @param post
+     */
+    public void deletePost(Post post);
+
+    /**
+     * Metoda zwraca dokument o podanym id.
+     * 
+     * @param id
+     * @return
+     */
+    public Post getPost(String id, Boolean initializeCollections);
+
+    /**
+     * Metoda zwraca listę komentarzy dla postu.
+     * 
+     * @param id
+     * @return
+     */
+    public List<Comment> getCommentsForPost(String id);
+
+    /**
      * Metoda pobiera użytkownika o danej nazwie.
      * Jeśli użytkownika nie ma w bazie to zwraca null.
      * 
@@ -38,5 +62,10 @@ public interface BlogService {
     public User getUser(String userName);
 
     public Comment createComment(Comment comment);
-
+    /**
+     * Metoda zwraca dostępne tagi.
+     * 
+     * @return
+     */
+    public List<Tag> getAvailableTags();
 }

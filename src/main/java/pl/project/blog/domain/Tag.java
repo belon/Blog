@@ -1,12 +1,16 @@
 package pl.project.blog.domain;
 
+import java.util.ArrayList;
+import java.util.List;
+import org.svenson.JSONProperty;
+
 /**
  *
  * @author Jarosław Bela
  */
 public class Tag extends AppDocument implements Comparable<Tag> {
 
-    String post_id;
+    List<Post> posts = new ArrayList<Post>();
     //
     String name;
 
@@ -18,12 +22,13 @@ public class Tag extends AppDocument implements Comparable<Tag> {
         this.name = name;
     }
 
-    public String getPost_id() {
-        return post_id;
+    @JSONProperty(ignore=true)
+    public List<Post> getPosts() {
+        return posts;
     }
 
-    public void setPost_id(String post_id) {
-        this.post_id = post_id;
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
     }
 
     public int compareTo(Tag o) {
@@ -31,5 +36,10 @@ public class Tag extends AppDocument implements Comparable<Tag> {
             return getName().compareTo(o.getName());
         }
         return 0;
+    }
+
+    @Override
+    public String toString() {
+        return this.name;
     }
 }

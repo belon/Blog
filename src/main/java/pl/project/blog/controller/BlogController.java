@@ -2,7 +2,7 @@ package pl.project.blog.controller;
 
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Locale;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import pl.project.blog.BlogService;
@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.project.blog.domain.AppDocument;
 import pl.project.blog.domain.Comment;
 import pl.project.blog.util.Messages;
 
@@ -76,7 +77,7 @@ public class BlogController {
      */
     @RequestMapping("/admin/newPost")
     public ModelAndView showNewPostForm() {
-        return new ModelAndView("admin/newPost", "postObject", new Post());
+        return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags());
     }
 
     /*
@@ -170,6 +171,43 @@ public class BlogController {
         }
     }
 
+    @RequestMapping("/admin/delPost")
+    public ModelAndView showDeletePostForm(@RequestParam("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("admin/delPost");
+
+        AppDocument post = blogService.getPost(id, false);
+        modelAndView.addObject("post", post);
+
+        return modelAndView;
+    }
+
+    /**
+     * Usuń post o danym id oraz wszystkie jego komentarze.
+     *
+     * @param id        _id of the document to delete
+     * @return
+     */
+    @RequestMapping("/admin/delPost/ok")
+    public ModelAndView deletePost(
+            @RequestParam(value = "ajax", required = false) String ajax,
+            @RequestParam(value = "ok", required = false) String ok,
+            @RequestParam("id") String id) {
+
+        if (ok != null) {
+            blogService.deletePost(blogService.getPost(id, true));
+        }
+
+        if (ajax != null) {
+            Map m = new HashMap();
+            m.put("ok", true);
+            m.put("deleted", id);
+            m.put("redirect", "app/home");
+            return JSONView.modelAndView(m);
+        } else {
+            return new ModelAndView("redirect:/app/home");
+        }
+    }
+
     /**
      * Strona główna.
      */
@@ -191,10 +229,21 @@ public class BlogController {
      * @return
      */
     @RequestMapping("/commentlist")
-    public String showComments(ModelMap model) {
-        //model.addAttribute("posts", blogService.listPosts(true));
-        
-        return "commentlist";
+    public ModelAndView showComments(
+            @RequestParam(value = "ajax", required = false) String ajax,
+            @RequestParam("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("commentlist");
+
+        List<Comment> comments = blogService.getCommentsForPost(id);
+
+        if (ajax != null) {
+            Map m = new HashMap();
+            m.put("ok", true);
+            m.put("comments", comments);
+            return JSONView.modelAndView(m);
+        } else {
+            return modelAndView.addObject("comments", comments);
+        }
     }
     
 }

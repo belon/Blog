@@ -37,11 +37,20 @@
                     <form:input path="author"/><br/>
                     <form:errors path="author" cssClass="error"/>
                 </dd>
+                <dt>Tags</dt>
+                <dd>
+                    <form:select path="tagIds"
+                                 items="${tags}"
+                                 itemValue="id"
+                                 itemLabel="name"
+                                 multiple="true"
+                                 cssStyle="width: 160px;"/><br/>
+                </dd>
                 <dt>Content</dt>
                 <dd>
                     <form:textarea path="content"
-                                   cols="50"
-                                   rows="5"/>
+                                   cols="90"
+                                   rows="50"/>
                     <form:errors path="content" cssClass="error"/>
                 </dd>
 
