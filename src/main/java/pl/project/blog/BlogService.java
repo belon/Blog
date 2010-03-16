@@ -61,6 +61,7 @@ public interface BlogService {
      */
     public User getUser(String userName);
 
+    public Comment createComment(Comment comment);
     /**
      * Metoda zwraca dostępne tagi.
      * 

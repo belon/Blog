@@ -1,6 +1,7 @@
 <%@page pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -8,6 +9,7 @@
         <title>Blog</title>
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="base_url" content="<c:url value="/"/>" />
         <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/lavalamp.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/ui-lightness/style.css" rel="stylesheet" type="text/css" />
@@ -16,6 +18,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.lavalamp.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery-ui.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/index.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/blog.js"></script>
     </head>
     <body>
         <div id="page">

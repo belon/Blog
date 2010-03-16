@@ -21,6 +21,15 @@ function LoadBlogContent(page) {
                             $(t).find('.comments').html(data);
                         }
                     });
+                    $.ajax({
+                       url: "/Blog/app/addComment?id="+t.id ,
+                       error: function(data) {
+                           ErrorBox(data);
+                       },
+                       success: function(data) {
+                           $(t).find('.commentcontent').html(data);
+                       }
+                    });
                 });
             });
         },

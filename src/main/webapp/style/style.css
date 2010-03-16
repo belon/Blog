@@ -92,18 +92,18 @@ a:hover {color:#036; text-decoration:none;}
 .postcontent ol li {padding:5px;}
 blockquote {display:block; padding:5px; margin:15px; font: 1.2em Georgia, "Times New Roman", Times, serif; color:#036; border-bottom: dashed 1px #ddd; border-top: dashed 1px #ddd; text-align:center;}
 blockquote.leftalign {float:left; width:300px; text-align:right; margin:10px;}
-blockquote.rightalign {float:right; width:300px; text-align:left; margin:10px;}#comments #commentcontent label {
+blockquote.rightalign {float:right; width:300px; text-align:left; margin:10px;}.comments .commentcontent label {
 	display: block;
 	padding: 3px;
 }
-#wrap #wrap2 #content #left .post .postcontent #comments #commentcontent li {
+#wrap #wrap2 #content #left .post .postcontent .comments .commentcontent li {
 	display: block;
 	padding: 5px;
 	margin-bottom: 5px;
 	background: #fff;
 	list-style: none;
 }
-#wrap #wrap2 #content #left .post .postcontent #comments #commentcontent .odd {
+#wrap #wrap2 #content #left .post .postcontent .comments .commentcontent .odd {
 	background: #D3DEED;
 }
 
