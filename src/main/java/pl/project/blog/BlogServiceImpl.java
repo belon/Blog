@@ -10,6 +10,7 @@ import org.jcouchdb.db.Database;
 import org.jcouchdb.db.Options;
 import org.jcouchdb.document.ValueAndDocumentRow;
 import org.jcouchdb.document.ViewAndDocumentsResult;
+import org.jcouchdb.exception.NotFoundException;
 import org.jcouchdb.exception.UpdateConflictException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,7 @@ import org.springframework.util.Assert;
 import pl.project.blog.auth.Roles;
 import pl.project.blog.domain.AppDocument;
 import pl.project.blog.domain.Comment;
+import pl.project.blog.domain.PostTag;
 import pl.project.blog.domain.Tag;
 import pl.project.blog.domain.User;
 
@@ -31,6 +33,8 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
 
     private static Logger log = LoggerFactory.getLogger(BlogServiceImpl.class);
     private Database database;
+    //
+    private List<Tag> availableTags = null;
 
     @Required
     public void setDatabase(Database database) {
@@ -57,11 +61,19 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
                 }
 
                 if (doc instanceof Comment) {
-                    lastPost.addComment((Comment) doc);
+                    if (lastPost != null) {
+                        lastPost.addComment((Comment) doc);
+                    }
                 }
 
-                if (doc instanceof Tag) {
-                    lastPost.addTag((Tag) doc);
+                if (doc instanceof PostTag) {
+                    if (lastPost != null) {
+                        try {
+                            lastPost.addTag(database.getDocument(Tag.class, ((PostTag) doc).getTag_id()));
+                        } catch (NotFoundException ex) {
+                            log.error("Dokument o id = '%s' nie istnieje", ((PostTag)doc).getTag_id());
+                        }
+                    }
                 }
             }
 
@@ -100,6 +112,64 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    public void deletePost(Post post) {
+        if (post != null) {
+            for (Comment comment : post.getComments()) {
+                delete(comment.getId(), comment.getRevision());
+            }
+            ViewAndDocumentsResult<Object, PostTag> result = database.queryViewAndDocuments("relation/post-tag", Object.class, PostTag.class, Options.option().key(post.getId()), null);
+            for (ValueAndDocumentRow<Object, PostTag> row : result.getRows()) {
+                delete(row.getDocument().getId(), row.getDocument().getRevision());
+            }
+            delete(post.getId(), post.getRevision());
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public Post getPost(String id, Boolean initializeCollections) {
+        try {
+            Post post = null;
+
+            if (initializeCollections) {
+                ViewAndDocumentsResult<Object, AppDocument> result = database.queryViewAndDocuments("post/byId", Object.class, AppDocument.class, Options.option().key(id), null);
+
+                List<Comment> comments = new ArrayList<Comment>();
+                List<Tag> tags = new ArrayList<Tag>();
+
+                for (ValueAndDocumentRow<Object, AppDocument> row : result.getRows()) {
+                    AppDocument doc = row.getDocument();
+
+                    System.out.println("Dokument :" + doc);
+                    if (doc instanceof Post) {
+                        post = (Post) doc;
+                    }
+                    if (doc instanceof Comment) {
+                        comments.add((Comment) doc);
+                    }
+                    if (doc instanceof PostTag) {
+                        tags.add(database.getDocument(Tag.class, ((PostTag) doc).getTag_id()));
+                    }
+                }
+
+                if (post != null) {
+                    post.setComments(comments);
+                    post.setTags(tags);
+                }
+            } else {
+                post = database.getDocument(Post.class, id);
+            }
+
+            return post;
+        } catch (NotFoundException ex) {
+            return null;
+        }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public User getUser(String userName) {
         ViewAndDocumentsResult<Object, User> result = database.queryViewAndDocuments("user/byName", Object.class, User.class, new Options().key(userName), null);
 
@@ -117,6 +187,15 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     private void initialize() {
         if (listPosts(false).isEmpty()) {
 
+            // utwórz przykładowe tagi
+            List<Tag> tags = new ArrayList<Tag>();
+            for (int i = 0; i < 10; i++) {
+                Tag tag = new Tag();
+                tag.setName("tag" + i);
+                persist(tag);
+                tags.add(tag);
+            }
+
             for (int i = 0; i < 5; i++) {
                 Post post = new Post();
 
@@ -132,11 +211,11 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
 
                     post.addComment(comment);
                 }
-                for (int l = 0; l < 5; l++) {
-                    Tag tag = new Tag();
-                    tag.setName("tag" + l);
-                    post.addTag(tag);
-                }
+                post.addTag(tags.get(i));
+                post.addTag(tags.get(i + 1));
+                post.addTag(tags.get(i + 2));
+                post.addTag(tags.get(i + 3));
+                post.addTag(tags.get(i + 4));
 
                 persist(post);
             }
@@ -149,6 +228,18 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
             user.setRoles(Arrays.asList(Roles.ROLE_ADMIN.getRoleName(), Roles.ROLE_USER.getRoleName()));
             persist(user);
         }
+    }
+
+    public List<Tag> getAvailableTags() {
+        if (availableTags == null) {
+            availableTags = new ArrayList<Tag>();
+
+            ViewAndDocumentsResult<Object, Tag> result = database.queryViewAndDocuments("tag/byName", Object.class, Tag.class, null, null);
+            for (ValueAndDocumentRow<Object, Tag> row : result.getRows()) {
+                availableTags.add(row.getDocument());
+            }
+        }
+        return availableTags;
     }
 
     /**
@@ -173,5 +264,14 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         appDocument.beforeUpdate(database);
         database.updateDocument(appDocument);
         appDocument.afterUpdate(database);
+    }
+
+    /**
+     * Metoda do uaktualniania encji w bazie danych.
+     *
+     * @param appDocument
+     */
+    private void delete(String id, String rev) {
+        database.delete(id, rev);
     }
 }
