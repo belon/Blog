@@ -10,9 +10,9 @@
                 <div class="postheader"></div>
                 <div class="postcontent">
                     <span class="date rightalign">${curPost.createDate}</span>
-                    <span class="pt">
+                    <div class="pt">
                         <h2>${curPost.title}</h2>
-                    </span>
+                    </div>
                     <p>
                         ${curPost.content}
                     </p>
@@ -23,6 +23,8 @@
                         </c:forEach>
                     </div>
                     <div class="comments">
+                    </div>
+                    <div class="commentcontent">
                     </div>
                 </div>
                 <div class="postbottom">

@@ -1,6 +1,7 @@
 package pl.project.blog;
 
 import java.util.List;
+import pl.project.blog.domain.Comment;
 import pl.project.blog.domain.Post;
 import pl.project.blog.domain.User;
 
@@ -35,5 +36,7 @@ public interface BlogService {
      * @return
      */
     public User getUser(String userName);
+
+    public Comment createComment(Comment comment);
 
 }

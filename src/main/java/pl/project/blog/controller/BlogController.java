@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import pl.project.blog.domain.Comment;
 import pl.project.blog.util.Messages;
 
 /**
@@ -76,6 +77,52 @@ public class BlogController {
     @RequestMapping("/admin/newPost")
     public ModelAndView showNewPostForm() {
         return new ModelAndView("admin/newPost", "postObject", new Post());
+    }
+
+    /*
+     *  Dodawanie komentarza do postu
+     */
+    @RequestMapping("/addComment")
+    public ModelAndView addCommentForm() {
+        return new ModelAndView("addComment", "commentObject", new Comment());
+    }
+
+    /*
+     *  Akcja dodająca komentarz do postu
+     */
+    @RequestMapping(value = "/addComment/create")
+    public ModelAndView createComment(HttpServletRequest request,
+                                      @RequestParam(value = "ajax", required = false) String ajax,
+                                      @ModelAttribute("commentObject") Comment comment,
+                                      BindingResult bindingResult) {
+
+        validator.validate(comment, bindingResult);
+
+        if(bindingResult.hasErrors()) {
+            if(ajax != null) {
+                Map m = new HashMap();
+                m.put("ok", false);
+                m.put("errors", Messages.getMessagesForErrors(bindingResult, messageSource, request.getLocale()));
+                return JSONView.modelAndView(m);
+            } else {
+                for (FieldError error : bindingResult.getFieldErrors()) {
+                    System.out.println("ERROR:  " + error.getField());
+                }
+                return addCommentForm();
+            }
+        }
+
+        comment.setCreated(new Date());
+        blogService.createComment(comment);
+
+        if(ajax != null) {
+            Map m = new HashMap();
+            m.put("ok", true);
+            m.put("redirect", "app/home");
+            return JSONView.modelAndView(m);
+        } else {
+             return new ModelAndView("redirect:/app/home");
+        }
     }
 
     /**
@@ -149,4 +196,5 @@ public class BlogController {
         
         return "commentlist";
     }
+    
 }
