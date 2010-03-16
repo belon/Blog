@@ -1,6 +1,7 @@
 package pl.project.blog;
 
 import java.util.List;
+import pl.project.blog.domain.Comment;
 import pl.project.blog.domain.Post;
 import pl.project.blog.domain.Tag;
 import pl.project.blog.domain.User;
@@ -42,6 +43,14 @@ public interface BlogService {
      * @return
      */
     public Post getPost(String id, Boolean initializeCollections);
+
+    /**
+     * Metoda zwraca listę komentarzy dla postu.
+     * 
+     * @param id
+     * @return
+     */
+    public List<Comment> getCommentsForPost(String id);
 
     /**
      * Metoda pobiera użytkownika o danej nazwie.

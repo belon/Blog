@@ -170,6 +170,21 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     /**
      * {@inheritDoc}
      */
+    public List<Comment> getCommentsForPost(String id) {
+        List<Comment> comments = new ArrayList<Comment>();
+
+        ViewAndDocumentsResult<Object, Comment> result = database.queryViewAndDocuments("comment/byPostId", Object.class, Comment.class, Options.option().key(id), null);
+
+        for (ValueAndDocumentRow<Object, Comment> row : result.getRows()) {
+            comments.add(row.getDocument());
+        }
+
+        return comments;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     public User getUser(String userName) {
         ViewAndDocumentsResult<Object, User> result = database.queryViewAndDocuments("user/byName", Object.class, User.class, new Options().key(userName), null);
 
@@ -179,6 +194,7 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
 
         return result.getRows().get(0).getDocument();
     }
+
 
     public void afterPropertiesSet() throws Exception {
         initialize();

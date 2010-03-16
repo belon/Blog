@@ -13,7 +13,7 @@ function LoadBlogContent(page) {
                 $(value,'.comments_link').click(function() {
                     var t = this;
                     $.ajax({
-                        url: "/Blog/app/commentlist?id="+t.id ,
+                        url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
                         error: function(data) {
                             ErrorBox(data);
                         },

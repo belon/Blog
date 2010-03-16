@@ -2,6 +2,7 @@ package pl.project.blog.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import pl.project.blog.BlogService;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.project.blog.domain.AppDocument;
+import pl.project.blog.domain.Comment;
 import pl.project.blog.util.Messages;
 
 /**
@@ -159,6 +161,7 @@ public class BlogController {
             return new ModelAndView("redirect:/app/home");
         }
     }
+
     /**
      * Strona główna.
      */
@@ -180,9 +183,20 @@ public class BlogController {
      * @return
      */
     @RequestMapping("/commentlist")
-    public String showComments(ModelMap model) {
-        //model.addAttribute("posts", blogService.listPosts(true));
-        
-        return "commentlist";
+    public ModelAndView showComments(
+            @RequestParam(value = "ajax", required = false) String ajax,
+            @RequestParam("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("commentlist");
+
+        List<Comment> comments = blogService.getCommentsForPost(id);
+
+        if (ajax != null) {
+            Map m = new HashMap();
+            m.put("ok", true);
+            m.put("comments", comments);
+            return JSONView.modelAndView(m);
+        } else {
+            return modelAndView.addObject("comments", comments);
+        }
     }
 }
