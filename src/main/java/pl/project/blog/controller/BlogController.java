@@ -1,5 +1,6 @@
 package pl.project.blog.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +78,7 @@ public class BlogController {
      */
     @RequestMapping("/admin/newPost")
     public ModelAndView showNewPostForm() {
-        return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags());
+        return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags(false));
     }
 
     /**
@@ -172,8 +173,24 @@ public class BlogController {
     }
 
     @RequestMapping("/bloglist")
-    public String showBlogList(ModelMap model) {
-        model.addAttribute("posts", blogService.listPosts(true));
+    public String showBlogList(
+            ModelMap model,
+            @RequestParam(value = "tagId", required = false) String tagId) {
+
+        List<Post> posts = new ArrayList<Post>();
+
+        if (tagId != null) {
+            for (Post post : blogService.listPosts(true)) {
+                if (post.containTag(tagId)) {
+                    posts.add(post);
+                }
+            }
+        } else {
+            posts = blogService.listPosts(true);
+        }
+        
+        model.addAttribute("posts", posts);
+
         return "bloglist";
     }
 
@@ -198,5 +215,22 @@ public class BlogController {
         } else {
             return modelAndView.addObject("comments", comments);
         }
+    }
+
+    /**
+     * Pobiera tagi.
+     * Tylko ajax request.
+     * 
+     * @param ajax
+     * @return
+     */
+    @RequestMapping("/taglist")
+    public String getTags(
+            ModelMap model,
+            @RequestParam(value = "ajax", required = true) String ajax) {
+
+        model.addAttribute("tags", blogService.getAvailableTags(true));
+
+        return "taglist";
     }
 }

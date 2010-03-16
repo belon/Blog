@@ -66,5 +66,5 @@ public interface BlogService {
      * 
      * @return
      */
-    public List<Tag> getAvailableTags();
+    public List<Tag> getAvailableTags(Boolean forceReload);
 }

@@ -13,6 +13,7 @@ public class Tag extends AppDocument implements Comparable<Tag> {
     List<Post> posts = new ArrayList<Post>();
     //
     String name;
+    Integer count = 0;
 
     public String getName() {
         return name;
@@ -36,6 +37,14 @@ public class Tag extends AppDocument implements Comparable<Tag> {
             return getName().compareTo(o.getName());
         }
         return 0;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override

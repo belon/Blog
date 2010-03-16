@@ -10,7 +10,6 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
-        <link href="${pageContext.request.contextPath}/style/blog.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/lavalamp.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />

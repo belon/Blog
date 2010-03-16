@@ -9,7 +9,7 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="base_url" content="<c:url value="/"/>" />
-        <link rel="stylesheet" href="${pageContext.request.contextPath}/style/blog.css" type="text/css"/>
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/style/style.css" type="text/css"/>
         <link rel="stylesheet" href="${pageContext.request.contextPath}/style/jquery.tooltip.css" type="text/css"/>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.tooltip.pack.js"></script>

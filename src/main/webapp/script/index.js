@@ -6,7 +6,7 @@ function LoadBlogContent(page) {
 
     $.ajax({
         url: "/Blog/app/bloglist",
-        success: function(data){
+        success: function(data) {
             $('#blogcontent').html(data);
 
             $.each($('#bloglist .post'), function(index,value) {
@@ -21,6 +21,66 @@ function LoadBlogContent(page) {
                             $(t).find('.comments').html(data);
                         }
                     });
+                });
+            });
+        },
+        error : function(data) {
+            MessageBox(data);
+        }
+    });
+}
+
+function LoadBlogContentSuccess(data) {
+    $('#blogcontent').html(data);
+
+    $.each($('#bloglist .post'), function(index,value) {
+        $(value,'.comments_link').click(function() {
+            var t = this;
+            $.ajax({
+                url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
+                error: function(data) {
+                    ErrorBox(data);
+                },
+                success: function(data) {
+                    $(t).find('.comments').html(data);
+                }
+            });
+        });
+    });
+}
+
+function LoadSideBar(page) {
+    $('#sidebar').empty();
+
+    $.ajax({
+        url: "/Blog/app/taglist?ajax=1",
+        success: function(data) {
+            $('#sidebar').html(data);
+
+            $('#sidebar #taglist .tag_link').click(function() {
+                $.ajax({
+                    url: "/Blog/app/bloglist?tagId="+this.id+"&ajax=1" ,
+                    success: function(data) {
+                        $('#blogcontent').html(data);
+
+                        $.each($('#bloglist .post'), function(index,value) {
+                            $(value,'.comments_link').click(function() {
+                                var t = this;
+                                $.ajax({
+                                    url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
+                                    error: function(data) {
+                                        ErrorBox(data);
+                                    },
+                                    success: function(data) {
+                                        $(t).find('.comments').html(data);
+                                    }
+                                });
+                            });
+                        });
+                    },
+                    error: function(data) {
+                        ErrorBox(data);
+                    }
                 });
             });
         },
@@ -77,6 +137,8 @@ $(function() {
     });
 
     LoadBlogContent();
+
+    LoadSideBar();
 });
 
 

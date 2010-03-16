@@ -114,3 +114,21 @@ blockquote.rightalign {float:right; width:300px; text-align:left; margin:10px;}#
 	background-image: url(../images/b1.png);
 	background-repeat: no-repeat;
 }
+
+.tag_link {
+     margin-right: 2px;
+     margin-left: 4px;
+}
+
+.error {
+    color: #ff0033;
+}
+
+#gravatars img {
+    border:1px solid #DDDDDD;
+    margin-right:3px;
+    padding:2px;
+    position:relative;
+    top:-2px;
+    vertical-align:middle;
+}

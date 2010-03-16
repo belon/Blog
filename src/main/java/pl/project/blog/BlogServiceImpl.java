@@ -71,7 +71,7 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
                         try {
                             lastPost.addTag(database.getDocument(Tag.class, ((PostTag) doc).getTag_id()));
                         } catch (NotFoundException ex) {
-                            log.error("Dokument o id = '%s' nie istnieje", ((PostTag)doc).getTag_id());
+                            log.error("Dokument o id = '%s' nie istnieje", ((PostTag) doc).getTag_id());
                         }
                     }
                 }
@@ -120,6 +120,10 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
             ViewAndDocumentsResult<Object, PostTag> result = database.queryViewAndDocuments("relation/post-tag", Object.class, PostTag.class, Options.option().key(post.getId()), null);
             for (ValueAndDocumentRow<Object, PostTag> row : result.getRows()) {
                 delete(row.getDocument().getId(), row.getDocument().getRevision());
+
+                Tag tag = database.getDocument(Tag.class, row.getDocument().getTag_id());
+                tag.setCount(tag.getCount() - 1);
+                database.updateDocument(tag);
             }
             delete(post.getId(), post.getRevision());
         }
@@ -195,23 +199,25 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         return result.getRows().get(0).getDocument();
     }
 
-
     public void afterPropertiesSet() throws Exception {
         initialize();
     }
 
     private void initialize() {
-        if (listPosts(false).isEmpty()) {
 
-            // utwórz przykładowe tagi
-            List<Tag> tags = new ArrayList<Tag>();
+        // utwórz przykładowe tagi
+        List<Tag> tags = getAvailableTags(false);
+        if (tags.isEmpty()) {
             for (int i = 0; i < 10; i++) {
                 Tag tag = new Tag();
                 tag.setName("tag" + i);
+                tag.setCount(i * 2 + 1);
                 persist(tag);
                 tags.add(tag);
             }
+        }
 
+        if (listPosts(false).isEmpty()) {
             for (int i = 0; i < 5; i++) {
                 Post post = new Post();
 
@@ -246,15 +252,16 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         }
     }
 
-    public List<Tag> getAvailableTags() {
-        if (availableTags == null) {
+    public List<Tag> getAvailableTags(Boolean forceReload) {
+        if (forceReload || availableTags == null) {
             availableTags = new ArrayList<Tag>();
-
+            
             ViewAndDocumentsResult<Object, Tag> result = database.queryViewAndDocuments("tag/byName", Object.class, Tag.class, null, null);
             for (ValueAndDocumentRow<Object, Tag> row : result.getRows()) {
                 availableTags.add(row.getDocument());
             }
         }
+        
         return availableTags;
     }
 

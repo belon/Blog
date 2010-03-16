@@ -50,6 +50,22 @@ public class Post extends AppDocument implements Comparable<Post> {
         }
     }
 
+    /**
+     * Metoda zwraca true jeśli post zawiera tag
+     * o podanym id.
+     * 
+     * @param tagId
+     * @return
+     */
+    public Boolean containTag(String tagId) {
+        for (Tag tag : tags) {
+            if (tag.getId().equals(tagId)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     public void afterPersist(Database database) {
@@ -60,11 +76,16 @@ public class Post extends AppDocument implements Comparable<Post> {
         }
         // Zapisz w bazie wszystkie tagi
         for (String tagId : tagIds) {
+            // Zapisz relację pomiędzy tagiem a postem
             PostTag postTag = new PostTag();
             postTag.setPost_id(this.getId());
             postTag.setTag_id(tagId);
-
             database.createDocument(postTag);
+
+            // Zwiększ licznik częstości występowania w tagu
+            Tag tag = database.getDocument(Tag.class, tagId);
+            tag.setCount(tag.getCount()+1);
+            database.updateDocument(tag);
         }
     }
 
