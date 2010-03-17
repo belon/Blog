@@ -8,53 +8,32 @@ function LoadBlogContent(page) {
         url: "/Blog/app/bloglist",
         success: function(data) {
             $('#blogcontent').html(data);
-
-            $.each($('#bloglist .post'), function(index,value) {
-                $(value,'.comments_link').click(function() {
-                    var t = this;
-                    $.ajax({
-                        url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
-                        error: function(data) {
-                            ErrorBox(data);
-                        },
-                        success: function(data) {
-                            $(t).find('.comments').html(data);
-                        }
-                    });
-                    $.ajax({
-                       url: "/Blog/app/addComment?id="+t.id ,
-                       error: function(data) {
-                           ErrorBox(data);
-                       },
-                       success: function(data) {
-                           $(t).find('.commentcontent').html(data);
-                       }
-                    });
+            $('#blogcontent .comments_link a').click(function() {
+                var postElem = $(this).parents('.post');
+                $.ajax({
+                    url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
+                    error: function(data) {
+                        ErrorBox(data);
+                    },
+                    success: function(data) {
+                        postElem.find('.comments').html(data);
+                    }
                 });
+//                                $.ajax({
+//                                   url: "/Blog/app/addComment?id="+t.id ,
+//                                   error: function(data) {
+//                                       ErrorBox(data);
+//                                   },
+//                                   success: function(data) {
+//                                       $(t).find('.commentcontent').html(data);
+//                                   }
+//                                });
+//                            });
             });
         },
         error : function(data) {
             MessageBox(data);
         }
-    });
-}
-
-function LoadBlogContentSuccess(data) {
-    $('#blogcontent').html(data);
-
-    $.each($('#bloglist .post'), function(index,value) {
-        $(value,'.comments_link').click(function() {
-            var t = this;
-            $.ajax({
-                url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
-                error: function(data) {
-                    ErrorBox(data);
-                },
-                success: function(data) {
-                    $(t).find('.comments').html(data);
-                }
-            });
-        });
     });
 }
 
@@ -71,19 +50,16 @@ function LoadSideBar(page) {
                     url: "/Blog/app/bloglist?tagId="+this.id+"&ajax=1" ,
                     success: function(data) {
                         $('#blogcontent').html(data);
-
-                        $.each($('#bloglist .post'), function(index,value) {
-                            $(value,'.comments_link').click(function() {
-                                var t = this;
-                                $.ajax({
-                                    url: "/Blog/app/commentlist?id="+t.id+"&ajax=1" ,
-                                    error: function(data) {
-                                        ErrorBox(data);
-                                    },
-                                    success: function(data) {
-                                        $(t).find('.comments').html(data);
-                                    }
-                                });
+                        $('#blogcontent .comments_link a').click(function() {
+                            var postElem = $(this).parents('.post');
+                            $.ajax({
+                                url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
+                                error: function(data) {
+                                    ErrorBox(data);
+                                },
+                                success: function(data) {
+                                     postElem.find('.comments').html(data);
+                                }
                             });
                         });
                     },
@@ -147,7 +123,7 @@ $(function() {
 
     LoadBlogContent();
 
-    LoadSideBar();
+//LoadSideBar();
 });
 
 

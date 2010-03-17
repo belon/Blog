@@ -40,5 +40,5 @@
         </form:form>
 
 <script type="text/javascript">
-    $("#addComment").bind("click", $("#addCommentForm"), submitForm);
+    //$("#addComment").bind("click", $("#addCommentForm"), submitForm);
 </script>

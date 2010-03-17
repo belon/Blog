@@ -4,7 +4,7 @@
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
 
 <div id="bloglist">
-    <c:forEach var="curPost" items="${posts}">
+    <c:forEach var="curPost" items="${posts}" varStatus="status">
         <div class="blogentry">
             <div class="post" id="${curPost.id}">
                 <div class="postheader"></div>
@@ -29,7 +29,9 @@
                 </div>
                 <div class="postbottom">
                     <ul class="postmeta">
-                        <li class="comments_link">Pokaż komentarze</li>
+                        <li class="comments_link">
+                            <a href="#">Pokaż komentarze</a>
+                        </li>
                     </ul>
                 </div>
             </div>
