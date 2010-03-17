@@ -134,11 +134,19 @@ blockquote.rightalign {float:right; width:300px; text-align:left; margin:10px;}.
 }
 
 textarea:focus, input:focus {
-	border: 2px solid #900;
+    border: 2px solid #900;
 }
 
 .tagss {
     float: right;
     padding-right: 6px;
     max-width: 300px;
+}
+
+.commentlabel {
+width: 4em;
+float: left;
+text-align: right;
+margin-right: 0.5em;
+display: block
 }

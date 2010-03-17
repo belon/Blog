@@ -24,8 +24,6 @@
                     </div>
                     <div class="comments">
                     </div>
-                    <div class="commentcontent">
-                    </div>
                 </div>
                 <div class="postbottom">
                     <ul class="postmeta">
