@@ -3,14 +3,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib tagdir="/WEB-INF/tags" prefix="hood"%>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
-    <head>
-        <meta http-equiv="Pragma" content="no-cache" />
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
-    </head>
-
-    <body>
         <div class="post">
             <div class="postheader"></div>
             <div class="postcontent">
@@ -53,5 +45,3 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>

@@ -2,6 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <div id="bloglist">
     <c:forEach var="curPost" items="${posts}" varStatus="status">
@@ -30,6 +31,9 @@
                         <li class="comments_link">
                             <a href="#">Pokaż komentarze</a>
                         </li>
+                        <security:authorize ifAllGranted="ROLE_ADMIN">
+                            <li class="permalink"><blog:link href="/app/admin/delPost?id=${curPost.id}">Usuń post</blog:link></li>
+                        </security:authorize>
                     </ul>
                 </div>
             </div>

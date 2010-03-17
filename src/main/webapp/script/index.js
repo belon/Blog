@@ -94,6 +94,22 @@ function LoadPostForm(page) {
     });
 }
 
+function LoadLoginForm(page) {
+    $('#blogcontent').empty();
+
+    $('#loginForm').click(function() {
+        $.ajax({
+            url: "/Blog/app/login",
+            success: function(data) {
+                $('#blogcontent').html(data);
+            },
+            error: function(data) {
+                ErrorBox(data);
+            }
+        });
+    });
+}
+
 var infoDialog = null;
 
 function ErrorBox(message) {
@@ -151,6 +167,7 @@ $(function() {
     LoadBlogContent();
     LoadTagStatistic();
     LoadPostForm();
+    LoadLoginForm();
 
     // załadowanie gravatarów
     $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));

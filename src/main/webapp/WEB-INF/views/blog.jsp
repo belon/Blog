@@ -131,7 +131,7 @@
     </body>
 </html>
 
-<script>
+<script type="text/javascript">
     $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));
     SyntaxHighlighter.config.stripBrs = true;
     SyntaxHighlighter.all();

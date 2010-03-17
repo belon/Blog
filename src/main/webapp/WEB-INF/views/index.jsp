@@ -73,7 +73,13 @@
                             </ul>
                             <h3>Admin</h3>
                             <ul>
-                                <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
+                                <% if(!request.isUserInRole("ROLE_ADMIN")) { %>
+                                    <li class="cat-item"><blog:link id="loginForm" href="#">Zaloguj się</blog:link></li>
+                                <% } %>
+                                <security:authorize ifAllGranted="ROLE_ADMIN">
+                                    <li class="cat-item"><blog:link href="/app/logout">Wyloguj</blog:link></li>
+                                    <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
+                                </security:authorize>
                             </ul>
 
                             <div id="tagStatistic">
