@@ -11,13 +11,6 @@
     </head>
 
     <body>
-        <c:if test="${not empty param.login_error}">
-            <div class="errors">
-                <p>Próba logowania nie powiodła się, proszę spróbować ponownie.</p>
-                <p>Powód: ${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].localizedMessage}</p>
-            </div>
-        </c:if>
-
         <div class="post">
             <div class="postheader"></div>
             <div class="postcontent">
@@ -26,6 +19,12 @@
                     <div class="commentop"></div>
                     <div class="commentcontent">
                         <form name="f" action="<c:url value="/app/login/process" />" method="post">
+
+                            <div id="loginError" class="errors" style="display: none; visibility: hidden;">
+                                <h3>Próba logowania nie powiodła się, proszę spróbować ponownie.</h3>
+                                <h3>Powód: ${sessionScope['SPRING_SECURITY_LAST_EXCEPTION'].localizedMessage}</h3>
+                            </div>
+                            
                             <p>
                                 <label for="j_username">Nazwa użytkownika</label>
                                 <input id="j_username"
@@ -40,9 +39,9 @@
                             </p>
                             <p>
                                 <input id="rememberMe"
-                                        type="checkbox"
-                                        name="_spring_security_remember_me"
-                                        id="remember_me"/>
+                                       type="checkbox"
+                                       name="_spring_security_remember_me"
+                                       id="remember_me"/>
                                 <label for="rememberMe" style="display:inline;">Zapamiętaj</label>
                             </p>
                             <p>

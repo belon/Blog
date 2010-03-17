@@ -10,6 +10,9 @@
         <meta http-equiv="Pragma" content="no-cache" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="base_url" content="<c:url value="/"/>" />
+        <c:if test="${not empty param.login_error}">
+            <meta name="showLoginForm" content="true" />
+        </c:if>
         <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/lavalamp.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/ui-lightness/style.css" rel="stylesheet" type="text/css" />

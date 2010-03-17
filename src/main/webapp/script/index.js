@@ -4,37 +4,40 @@
 function LoadBlogContent(page) {
     $('#blogcontent').empty();
 
-    $.ajax({
-        url: "/Blog/app/bloglist",
-        success: function(data) {
-            $('#blogcontent').html(data);
-            $('#blogcontent .comments_link a').click(function() {
-                var postElem = $(this).parents('.post');
-                $.ajax({
-                    url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
-                    error: function(data) {
-                        ErrorBox(data);
-                    },
-                    success: function(data) {
-                        postElem.find('.comments').html(data);
-                    }
+    if (getMetaData('showLoginForm')) {
+        $.ajax({
+           url: "/Blog/app/login",
+           success: function(data) {
+               $('#blogcontent').html(data);
+               $('#loginError').removeAttr('style');
+           },
+           error: function(data) {
+               MessageBox(data);
+           }
+        });
+    } else {
+        $.ajax({
+            url: "/Blog/app/bloglist",
+            success: function(data) {
+                $('#blogcontent').html(data);
+                $('#blogcontent .comments_link a').click(function() {
+                    var postElem = $(this).parents('.post');
+                    $.ajax({
+                        url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
+                        error: function(data) {
+                            ErrorBox(data);
+                        },
+                        success: function(data) {
+                            postElem.find('.comments').html(data);
+                        }
+                    });
                 });
-//                                $.ajax({
-//                                   url: "/Blog/app/addComment?id="+t.id ,
-//                                   error: function(data) {
-//                                       ErrorBox(data);
-//                                   },
-//                                   success: function(data) {
-//                                       $(t).find('.commentcontent').html(data);
-//                                   }
-//                                });
-//                            });
-            });
-        },
-        error : function(data) {
-            MessageBox(data);
-        }
-    });
+            },
+            error : function(data) {
+                MessageBox(data);
+            }
+        });
+    }
 }
 
 function LoadTagStatistic(page) {
@@ -58,7 +61,7 @@ function LoadTagStatistic(page) {
                                     ErrorBox(data);
                                 },
                                 success: function(data) {
-                                     postElem.find('.comments').html(data);
+                                    postElem.find('.comments').html(data);
                                 }
                             });
                         });
@@ -128,7 +131,7 @@ function MessageBox(message) {
 }
 
 $(function() {
-    
+
     $("#1, #2, #3").lavaLamp({
         fx: "backout",
         speed: 700,
