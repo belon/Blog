@@ -4,5 +4,9 @@
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
 
 <div class="commentlist">
-    COMMENTs FOR <%= request.getParameter("id") %>
+    <c:forEach var="comment" items="${comments}">
+        <div>Komentarz: ${comment.content}</div>
+    </c:forEach>
 </div>
+
+<%@include file="addComment.jsp" %>

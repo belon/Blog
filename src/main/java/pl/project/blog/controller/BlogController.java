@@ -94,14 +94,14 @@ public class BlogController {
      */
     @RequestMapping(value = "/addComment/create")
     public ModelAndView createComment(HttpServletRequest request,
-                                      @RequestParam(value = "ajax", required = false) String ajax,
-                                      @ModelAttribute("commentObject") Comment comment,
-                                      BindingResult bindingResult) {
+            @RequestParam(value = "ajax", required = false) String ajax,
+            @ModelAttribute("commentObject") Comment comment,
+            BindingResult bindingResult) {
 
         validator.validate(comment, bindingResult);
 
-        if(bindingResult.hasErrors()) {
-            if(ajax != null) {
+        if (bindingResult.hasErrors()) {
+            if (ajax != null) {
                 Map m = new HashMap();
                 m.put("ok", false);
                 m.put("errors", Messages.getMessagesForErrors(bindingResult, messageSource, request.getLocale()));
@@ -117,13 +117,13 @@ public class BlogController {
         comment.setCreated(new Date());
         blogService.createComment(comment);
 
-        if(ajax != null) {
+        if (ajax != null) {
             Map m = new HashMap();
             m.put("ok", true);
             m.put("redirect", "app/home");
             return JSONView.modelAndView(m);
         } else {
-             return new ModelAndView("redirect:/app/home");
+            return new ModelAndView("redirect:/app/home");
         }
     }
 
@@ -234,7 +234,7 @@ public class BlogController {
         } else {
             posts = blogService.listPosts(true);
         }
-        
+
         model.addAttribute("posts", posts);
 
         return "bloglist";
@@ -253,14 +253,7 @@ public class BlogController {
 
         List<Comment> comments = blogService.getCommentsForPost(id);
 
-        if (ajax != null) {
-            Map m = new HashMap();
-            m.put("ok", true);
-            m.put("comments", comments);
-            return JSONView.modelAndView(m);
-        } else {
-            return modelAndView.addObject("comments", comments);
-        }
+        return modelAndView.addObject("comments", comments).addObject("commentObject", new Comment());
     }
 
     /**
@@ -279,5 +272,4 @@ public class BlogController {
 
         return "taglist";
     }
-    
 }
