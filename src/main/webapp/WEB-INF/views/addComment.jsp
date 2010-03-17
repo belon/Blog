@@ -7,7 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<br/>
         <form:form
             id = "addCommentForm"
             action = "${pageContext.request.contextPath}/app/addComment/create"
@@ -21,21 +20,21 @@
 
             <p>
                 <label for = "author">Autor</label>
-                <form:input path = "author" size = "22" tabindex="1" />
+                <form:input path = "author" size = "22" />
                 <form:errors path = "author" cssClass = "error" />
             </p>
             <p>
                 <label for = "email">Email</label>
-                <form:input path = "email" size = "22" tabindex = "2" type = "text"/>
+                <form:input path = "email" size = "22" type = "text"/>
                 <form:errors path = "email" cssClass = "error" />
             </p>
             <p>
                 <label for = "content">Treść</label>
-                <form:textarea path = "content" cols = "40" rows = "10" tabindex = "3" />
+                <form:textarea path = "content" cols = "40" rows = "10" style = "background-color: white;" />
                 <form:errors path = "content" cssClass = "error" />
             </p>
             <p>
-                <input name = "submit" id = "addComment" tabindex = "4" value = "Dodaj komentarz" type = "submit"/>
+                <input name = "submit" id = "addComment" value = "Dodaj komentarz" type = "submit"/>
             </p>
         </form:form>
 

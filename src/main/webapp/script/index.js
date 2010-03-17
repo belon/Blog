@@ -75,6 +75,22 @@ function LoadTagStatistic(page) {
     });
 }
 
+function LoadPostForm(page) {
+    $('#blogcontent').empty();
+
+    $('#addPost').click(function() {
+        $.ajax({
+            url: "/Blog/app/admin/newPost",
+            success: function(data) {
+                $('#blogcontent').html(data);
+            },
+            error: function(data) {
+                ErrorBox(data);
+            }
+        });
+    });
+}
+
 var infoDialog = null;
 
 function ErrorBox(message) {
@@ -124,6 +140,8 @@ $(function() {
     LoadBlogContent();
 
     LoadTagStatistic();
+
+    LoadPostForm();
 });
 
 
