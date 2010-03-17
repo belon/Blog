@@ -130,6 +130,14 @@ function MessageBox(message) {
     $dialog.dialog('open');
 }
 
+function getMetaData(name) {
+    return $("meta[name=" + name + "]").attr("content")
+}
+
+function getGravatarFor(email) {
+    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48&d=http://" + getMetaData('base_url') + "images/gravatar-48.png";
+}
+
 $(function() {
 
     $("#1, #2, #3").lavaLamp({
@@ -141,10 +149,15 @@ $(function() {
     });
 
     LoadBlogContent();
-
     LoadTagStatistic();
-
     LoadPostForm();
+
+    // załadowanie gravatarów
+    $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));
+
+    // Kolorowanie składni
+    SyntaxHighlighter.config.stripBrs = true;
+    SyntaxHighlighter.all();
 });
 
 

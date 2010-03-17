@@ -12,7 +12,7 @@
     <security:http auto-config="true">
         <security:form-login login-page="/app/login" login-processing-url="/app/login/process" default-target-url="/app/index"
                              always-use-default-target="true" authentication-failure-url="/app/index?login_error=1" />
-        <security:logout logout-url="/app/logout" logout-success-url="/app/home" />
+        <security:logout logout-url="/app/logout" logout-success-url="/app/index" />
         <security:intercept-url pattern="/app/admin/**" access="ROLE_ADMIN" />
         <security:intercept-url pattern="/app/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY,ROLE_USER" />

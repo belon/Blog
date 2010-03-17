@@ -82,11 +82,3 @@ function filterFn(field) {
     (field.checked || /select|textarea/i.test(field.nodeName) ||
         /text|hidden|password/i.test(field.type)) && !$(field).hasClass("ignored");
 }
-
-function getMetaData(name) {
-    return $("meta[name=" + name + "]").attr("content")
-}
-
-function getGravatarFor(email) {
-    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48&d=http://" + getMetaData('base_url') + "images/gravatar-48.png";
-}

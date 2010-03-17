@@ -58,8 +58,15 @@ public class BlogController {
      */
     @RequestMapping("/home")
     public String showHome(ModelMap model) {
-        model.addAttribute("posts", blogService.listPosts(true));
-        return "blog";
+        return showIndex(model);
+    }
+
+    /**
+     * Strona główna.
+     */
+    @RequestMapping("/index")
+    public String showIndex(ModelMap model) {
+        return "index";
     }
 
     /**
@@ -120,10 +127,10 @@ public class BlogController {
         if (ajax != null) {
             Map m = new HashMap();
             m.put("ok", true);
-            m.put("redirect", "app/home");
+            m.put("redirect", "app/index");
             return JSONView.modelAndView(m);
         } else {
-            return new ModelAndView("redirect:/app/home");
+            return new ModelAndView("redirect:/app/index");
         }
     }
 
@@ -137,7 +144,7 @@ public class BlogController {
      * @return
      */
     @RequestMapping(value = "/admin/newPost/create")
-    public ModelAndView createNew(
+    public ModelAndView createPost(
             HttpServletRequest request,
             @RequestParam(value = "ajax", required = false) String ajax,
             @ModelAttribute("postObject") Post post, BindingResult bindingResult) {
@@ -165,10 +172,10 @@ public class BlogController {
         if (ajax != null) {
             Map m = new HashMap();
             m.put("ok", true);
-            m.put("redirect", "app/home");
+            m.put("redirect", "app/index");
             return JSONView.modelAndView(m);
         } else {
-            return new ModelAndView("redirect:/app/home");
+            return new ModelAndView("redirect:/app/index");
         }
     }
 
@@ -202,20 +209,11 @@ public class BlogController {
             Map m = new HashMap();
             m.put("ok", true);
             m.put("deleted", id);
-            m.put("redirect", "app/home");
+            m.put("redirect", "app/index");
             return JSONView.modelAndView(m);
         } else {
-            return new ModelAndView("redirect:/app/home");
+            return new ModelAndView("redirect:/app/index");
         }
-    }
-
-    /**
-     * Strona główna.
-     */
-    @RequestMapping("/index")
-    public String showIndex(ModelMap model) {
-        //model.addAttribute("posts", blogService.listPosts(true));
-        return "index";
     }
 
     @RequestMapping("/bloglist")

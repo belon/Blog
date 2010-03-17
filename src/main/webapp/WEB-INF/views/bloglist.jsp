@@ -13,9 +13,9 @@
                     <div class="pt">
                         <h2>${curPost.title}</h2>
                     </div>
-                    <p>
-                        ${curPost.content}
-                    </p>
+                    <div>
+                        <pre style="font-size: 14px;">${curPost.content}</pre>
+                    </div>
                     <div class="tags">
                         Tagi:
                         <c:forEach var="tag" items="${curPost.tags}">

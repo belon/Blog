@@ -3,6 +3,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
+<%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
@@ -16,12 +17,17 @@
         <link href="${pageContext.request.contextPath}/style/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/lavalamp.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/ui-lightness/style.css" rel="stylesheet" type="text/css" />
+        <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
+        <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.easing.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.lavalamp.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery-ui.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/index.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/blog.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/md5.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
     </head>
     <body>
         <div id="page">
@@ -32,7 +38,7 @@
                         <div id="headercontent"><span id="sitename">Blog</span></div>
                         <div id="topnav">
                             <ul class="lavaLampWithImage" id="1">
-                                <li class="current"><blog:link href="/app/home">Home</blog:link></li>
+                                <li class="current"><blog:link href="/app/index">Home</blog:link></li>
                                 <li><a href="">Styles</a></li>
                                 <li><a href="">Notes</a></li>
                                 <li><a href="">Credits</a></li>
@@ -42,6 +48,12 @@
 
                     <div id="content">
                         <div id="left">
+                            <div id="gravatars">
+                                Przykładowe grawatary
+                                <img src="" alt="gravatar"/>
+                                <img src="" alt="gravatar"/>
+                                <img src="" alt="gravatar"/>
+                            </div>
                             <div id="blogcontent">
 
                             </div>
