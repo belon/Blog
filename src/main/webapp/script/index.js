@@ -37,15 +37,15 @@ function LoadBlogContent(page) {
     });
 }
 
-function LoadSideBar(page) {
-    $('#sidebar').empty();
+function LoadTagStatistic(page) {
+    $('#tagStatistic').empty();
 
     $.ajax({
         url: "/Blog/app/taglist?ajax=1",
         success: function(data) {
-            $('#sidebar').html(data);
+            $('#tagStatistic').html(data);
 
-            $('#sidebar #taglist .tag_link').click(function() {
+            $('#tagStatistic #taglist .tag_link').click(function() {
                 $.ajax({
                     url: "/Blog/app/bloglist?tagId="+this.id+"&ajax=1" ,
                     success: function(data) {
@@ -123,7 +123,7 @@ $(function() {
 
     LoadBlogContent();
 
-//LoadSideBar();
+    LoadTagStatistic();
 });
 
 

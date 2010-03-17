@@ -43,7 +43,28 @@
 
                             </div>
                         </div>
-                        <div id="sidebar"></div>
+                        <div id="sidebar">
+                            <h3>Kategorie</h3>
+                            <ul>
+                                <li class="cat-item"><a href="">Lorem Ipsum </a></li>
+                            </ul>
+                            <h3>Archiwum</h3>
+                            <ul>
+                                <li><a href="">Luty 2010</a></li>
+                            </ul>
+                            <h3>Linki</h3>
+                            <ul>
+                                <li><a href="">Themes</a></li>
+                            </ul>
+                            <h3>Meta</h3>
+                            <ul>
+                                <li><a href="">Log in</a></li>
+                                <li><blog:link href="/app/admin/newPost">Dodaj post...</blog:link></li>
+                            </ul>
+
+                            <div id="tagStatistic">
+                            </div>
+                        </div>
                         <div class="clear"></div>
                     </div>
 
