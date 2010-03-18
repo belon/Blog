@@ -112,6 +112,9 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     public Post updatePost(Post post) {
 
         try {
+            // Usuń stare tagi
+            deleteTagsFromPost(post.getId());
+            post.setTags(new ArrayList<Tag>());
             update(post);
         } catch (IllegalStateException ex) {
             log.error("Document already had a revision set!");
@@ -143,15 +146,19 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
             for (Comment comment : post.getComments()) {
                 delete(comment.getId(), comment.getRevision());
             }
-            ViewAndDocumentsResult<Object, PostTag> result = database.queryViewAndDocuments("relation/post-tag", Object.class, PostTag.class, Options.option().key(post.getId()), null);
-            for (ValueAndDocumentRow<Object, PostTag> row : result.getRows()) {
-                delete(row.getDocument().getId(), row.getDocument().getRevision());
-
-                Tag tag = database.getDocument(Tag.class, row.getDocument().getTag_id());
-                tag.setCount(tag.getCount() - 1);
-                database.updateDocument(tag);
-            }
+            deleteTagsFromPost(post.getId());
             delete(post.getId(), post.getRevision());
+        }
+    }
+
+    private void deleteTagsFromPost(String postId) {
+        ViewAndDocumentsResult<Object, PostTag> result = database.queryViewAndDocuments("relation/post-tag", Object.class, PostTag.class, Options.option().key(postId), null);
+        for (ValueAndDocumentRow<Object, PostTag> row : result.getRows()) {
+            delete(row.getDocument().getId(), row.getDocument().getRevision());
+
+            Tag tag = database.getDocument(Tag.class, row.getDocument().getTag_id());
+            tag.setCount(tag.getCount() - 1);
+            database.updateDocument(tag);
         }
     }
 
@@ -281,13 +288,13 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     public List<Tag> getAvailableTags(Boolean forceReload) {
         if (forceReload || availableTags == null) {
             availableTags = new ArrayList<Tag>();
-            
+
             ViewAndDocumentsResult<Object, Tag> result = database.queryViewAndDocuments("tag/byName", Object.class, Tag.class, null, null);
             for (ValueAndDocumentRow<Object, Tag> row : result.getRows()) {
                 availableTags.add(row.getDocument());
             }
         }
-        
+
         return availableTags;
     }
 

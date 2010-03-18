@@ -15,11 +15,20 @@ function submitForm(ev) {
             url: $form[0].action,
             data: params,
             dataType: "json",
+            beforeSend: function beforeSendRequest(request) {
+                this.data = this.data.replace(/%5B%5D/g,'');
+                request.open("GET", this.url.replace(/%5B%5D/g,''));
+            },
             success:
             function receiveFormResponse(result) {
                 if (result.ok) {
                     if (result.redirect) {
                         window.location.href = getMetaData('base_url') + result.redirect;
+                    } else if (result.content) {
+                        $('#blogcontent').empty();
+                        $('#blogcontent').html(result.content);
+                    } else {
+                        LoadBlogContent();
                     }
                 } else { // Błędy walidacji
 
@@ -62,6 +71,8 @@ function getFormContent(form) {
             var old = params[ field.name ];
             var value = $(field).val();
 
+            
+
             if (old) {
                 if (typeof old == "string") {
                     params[ field.name ] = [ old , value ];
@@ -69,7 +80,13 @@ function getFormContent(form) {
                     params[ field.name ].push(value);
                 }
             } else {
+                //                if($.isArray(value)) {
+                //                    $.each(value, function(index, val) {
+                //                       params[ field.name ] = val;
+                //                    });
+                //                } else {
                 params[ field.name ]  = value;
+            //                }
             }
         }
     }

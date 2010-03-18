@@ -15,11 +15,11 @@ import pl.project.blog.converter.DateConverter;
  */
 public class Post extends AppDocument implements Comparable<Post> {
 
-    @NotBlank(errorCode="field.title.required")
+    @NotBlank(errorCode = "field.title.required")
     String title;
-    @NotBlank(errorCode="field.content.required")
+    @NotBlank(errorCode = "field.content.required")
     String content;
-    @NotBlank(errorCode="field.author.required")
+    @NotBlank(errorCode = "field.author.required")
     String author;
     Date createDate;
     Date modifyDate;
@@ -66,7 +66,6 @@ public class Post extends AppDocument implements Comparable<Post> {
         return false;
     }
 
-
     @Override
     public void afterPersist(Database database) {
         // Zapisz w bazie wszystkie komentarze
@@ -84,8 +83,28 @@ public class Post extends AppDocument implements Comparable<Post> {
 
             // Zwiększ licznik częstości występowania w tagu
             Tag tag = database.getDocument(Tag.class, tagId);
-            tag.setCount(tag.getCount()+1);
+            tag.setCount(tag.getCount() + 1);
             database.updateDocument(tag);
+        }
+    }
+
+    @Override
+    public void afterUpdate(Database database) {
+        // Zapisz w bazie wszystkie tagi
+        for (String tagId : tagIds) {
+            if (!containTag(tagId)) {
+                // Zapisz relację pomiędzy tagiem a postem
+                PostTag postTag = new PostTag();
+                postTag.setPost_id(this.getId());
+                postTag.setTag_id(tagId);
+                database.createDocument(postTag);
+
+                // Zwiększ licznik częstości występowania w tagu
+                Tag tag = database.getDocument(Tag.class, tagId);
+                tag.setCount(tag.getCount() + 1);
+                database.updateDocument(tag);
+                addTag(tag);
+            }
         }
     }
 
@@ -116,12 +135,12 @@ public class Post extends AppDocument implements Comparable<Post> {
         this.author = author;
     }
 
-    @JSONProperty(ignore=true)
+    @JSONProperty(ignore = true)
     public List<Tag> getTags() {
         return tags;
     }
 
-    @JSONProperty(ignore=true)
+    @JSONProperty(ignore = true)
     public List<Comment> getComments() {
         return comments;
     }
@@ -132,16 +151,13 @@ public class Post extends AppDocument implements Comparable<Post> {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
-        for (Tag tag : tags) {
-            tagIds.add(tag.getId());
-        }
     }
 
     public Date getCreateDate() {
         return createDate;
     }
 
-    @JSONConverter(type=DateConverter.class)
+    @JSONConverter(type = DateConverter.class)
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
@@ -150,12 +166,18 @@ public class Post extends AppDocument implements Comparable<Post> {
         return modifyDate;
     }
 
+    @JSONConverter(type = DateConverter.class)
     public void setModifyDate(Date modifyDate) {
         this.modifyDate = modifyDate;
     }
 
-    @JSONProperty(ignore=true)
+    @JSONProperty(ignore = true)
     public List<String> getTagIds() {
+        if (tagIds.isEmpty() && !tags.isEmpty()) {
+            for (Tag tag : tags) {
+                tagIds.add(tag.getId());
+            }
+        }
         return tagIds;
     }
 

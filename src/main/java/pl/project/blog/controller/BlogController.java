@@ -187,17 +187,23 @@ public class BlogController {
     }
 
     @RequestMapping(value = "/admin/editPost/update")
-    public ModelAndView updatePost(@ModelAttribute("post") Post post, BindingResult bindingResult) {
+    public ModelAndView updatePost(HttpServletRequest request, @ModelAttribute("post") Post post, BindingResult bindingResult) {
+        Map response = new HashMap();
 
         validator.validate(post, bindingResult);
         if (bindingResult.hasErrors()) {
-            return showEditPostForm(post.getId());
+            response.put("ok", false);
+            response.put("errors", Messages.getMessagesForErrors(bindingResult, messageSource, request.getLocale()));
+        } else {
+            Post postOld = blogService.getPost(post.getId(), true);
+            post.setCreateDate(postOld.getCreateDate());
+            post.setModifyDate(new Date());
+            post.setTags(postOld.getTags());
+            blogService.updatePost(post);
+            
+            response.put("ok", true);
         }
-
-        post.setCreateDate(new Date());
-        blogService.updatePost(post);
-
-        return new ModelAndView("index");
+        return JSONView.modelAndView(response);
     }
 
     @RequestMapping("/admin/delPost")

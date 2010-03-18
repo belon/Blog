@@ -68,12 +68,6 @@
                                type = "submit"
                                value = "Wyślij"
                                tabindex = "5"/>
-
-                        <input id = "ok-ajax"
-                               class = "submit"
-                               type = "submit"
-                               value = "Wyślij (ajax)"
-                               tabindex = "5" />
                     </p>
 
                 </form:form>
@@ -84,5 +78,5 @@
 </div>
 
 <script type="text/javascript">
-    //$("#ok-ajax").bind("click", $("form"), submitForm);
+    $("#ok").bind("click", $("form"), submitForm);
 </script>

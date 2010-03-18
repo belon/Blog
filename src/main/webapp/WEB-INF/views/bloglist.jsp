@@ -33,7 +33,7 @@
                         </li>
                         <security:authorize ifAllGranted="ROLE_ADMIN">
                             <li class="category_link"><a href="#">Edytuj post</a></li>
-                            <li class="permalink"><blog:link href="/app/admin/delPost?id=${curPost.id}">Usuń post</blog:link></li>
+                            <li class="permalink"><a href="#">Usuń post</a></li>
                         </security:authorize>
                     </ul>
                 </div>

@@ -53,6 +53,10 @@ public class DateConverter implements TypeConverter {
     }
 
     public Object fromJSON(Object in) {
+        if (in == null) {
+            return in;
+        }
+        
         if (in instanceof List) {
             List<Long> values = (List<Long>) in;
 
@@ -72,6 +76,10 @@ public class DateConverter implements TypeConverter {
     }
 
     public Object toJSON(Object in) {
+        if (in == null) {
+            return null;
+        }
+        
         if (in instanceof Date) {
             Calendar calendar = Calendar.getInstance(timeZone);
             calendar.setTime((Date) in);

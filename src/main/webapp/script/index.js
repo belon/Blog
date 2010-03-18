@@ -20,6 +20,8 @@ function LoadBlogContent(page) {
             url: "/Blog/app/bloglist",
             success: function(data) {
                 $('#blogcontent').html(data);
+
+                // dodanie linków do 'Pokaż komentarze'
                 $('#blogcontent .comments_link a').click(function() {
                     var postElem = $(this).parents('.post');
                     $.ajax({
@@ -32,6 +34,8 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+
+                // dodanie linków do 'Edytuj post'
                 $('#blogcontent .postmeta .category_link a').click(function() {
                     var postElem = $(this).parents('.post');
                     $.ajax({
@@ -44,6 +48,8 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+                
+                // dodanie linków do 'Usuń post'
                 $('#blogcontent .postmeta .permalink a').click(function() {
                     var postElem = $(this).parents('.post');
                     $.ajax({
@@ -131,28 +137,6 @@ function LoadLoginForm(page) {
                 ErrorBox(data);
             }
         });
-    });
-}
-
-function LoadEditPostForm(page) {
-    $('#blogcontent').empty();
-
-    $.ajax({
-        url: "/Blog/app/bloglist",
-        success: function(data) {
-            $('#updatePost').click(function() {
-                var postElem = $(this).parents('.post');
-                $.ajax({
-                    url: "/Blog/app/admin/editPost?id="+postElem.attr('id')+"&ajax=1",
-                    success: function(data) {
-                        $('#blogcontent').html(data);
-                    },
-                    error: function(data) {
-                        ErrorBox(data);
-                    }
-                });
-            });
-        }
     });
 }
 
