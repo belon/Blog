@@ -32,6 +32,18 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+                $('#blogcontent .postmeta .category_link a').click(function() {
+                    var postElem = $(this).parents('.post');
+                    $.ajax({
+                        url: "/Blog/app/admin/editPost?id="+postElem.attr('id'),
+                        success: function(data) {
+                            $('#blogcontent').html(data);
+                        },
+                        error: function(data) {
+                            ErrorBox(data);
+                        }
+                    });
+                });
                 $('#blogcontent .postmeta .permalink a').click(function() {
                     var postElem = $(this).parents('.post');
                     $.ajax({
@@ -119,6 +131,28 @@ function LoadLoginForm(page) {
                 ErrorBox(data);
             }
         });
+    });
+}
+
+function LoadEditPostForm(page) {
+    $('#blogcontent').empty();
+
+    $.ajax({
+        url: "/Blog/app/bloglist",
+        success: function(data) {
+            $('#updatePost').click(function() {
+                var postElem = $(this).parents('.post');
+                $.ajax({
+                    url: "/Blog/app/admin/editPost?id="+postElem.attr('id')+"&ajax=1",
+                    success: function(data) {
+                        $('#blogcontent').html(data);
+                    },
+                    error: function(data) {
+                        ErrorBox(data);
+                    }
+                });
+            });
+        }
     });
 }
 

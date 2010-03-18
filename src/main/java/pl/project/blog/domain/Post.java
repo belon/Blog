@@ -132,6 +132,9 @@ public class Post extends AppDocument implements Comparable<Post> {
 
     public void setTags(List<Tag> tags) {
         this.tags = tags;
+        for (Tag tag : tags) {
+            tagIds.add(tag.getId());
+        }
     }
 
     public Date getCreateDate() {
