@@ -109,6 +109,19 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         return post;
     }
 
+    public Post updatePost(Post post) {
+
+        try {
+            update(post);
+        } catch (IllegalStateException ex) {
+            log.error("Document already had a revision set!");
+        } catch (UpdateConflictException ex) {
+            log.error("There's an update conflict while updating the document!");
+        }
+
+        return post;
+    }
+
     public Comment createComment(Comment comment) {
 
         try {

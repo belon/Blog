@@ -88,6 +88,13 @@ public class BlogController {
         return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags(false));
     }
 
+    @RequestMapping("/admin/editPost")
+    public ModelAndView showEditPostForm(@RequestParam("id") String id) {
+        ModelAndView modelAndView = new ModelAndView("admin/editPost", "post", blogService.getPost(id, false)).addObject("tags", blogService.getAvailableTags(false));
+
+        return modelAndView;
+    }
+
     /*
      *  Dodawanie komentarza do postu
      */
@@ -177,6 +184,23 @@ public class BlogController {
         } else {
             return new ModelAndView("redirect:/app/index");
         }
+    }
+
+    @RequestMapping(value = "/admin/editPost/update")
+    public ModelAndView updatePost(
+            HttpServletRequest request,
+            @RequestParam("id") String id,
+            @ModelAttribute("post") Post post, BindingResult bindingResult) {
+
+        validator.validate(post, bindingResult);
+        if (bindingResult.hasErrors()) {
+                return showEditPostForm(post.getId());
+            }
+
+        //post.setCreateDate(new Date());
+        blogService.updatePost(post);
+
+        return new ModelAndView("index");
     }
 
     @RequestMapping("/admin/delPost")

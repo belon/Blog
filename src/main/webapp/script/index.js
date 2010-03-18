@@ -6,14 +6,14 @@ function LoadBlogContent(page) {
 
     if (getMetaData('showLoginForm')) {
         $.ajax({
-           url: "/Blog/app/login",
-           success: function(data) {
-               $('#blogcontent').html(data);
-               $('#loginError').removeAttr('style');
-           },
-           error: function(data) {
-               MessageBox(data);
-           }
+            url: "/Blog/app/login",
+            success: function(data) {
+                $('#blogcontent').html(data);
+                $('#loginError').removeAttr('style');
+            },
+            error: function(data) {
+                MessageBox(data);
+            }
         });
     } else {
         $.ajax({
@@ -32,6 +32,19 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+                $('#blogcontent .postmeta .category_link a').click(function() {
+                    var postElem = $(this).parents('.post');
+                    $.ajax({
+                        url: "/Blog/app/admin/editPost?id="+postElem.attr('id'),
+                        success: function(data) {
+                            $('#blogcontent').html(data);
+                        },
+                        error: function(data) {
+                            ErrorBox(data);
+                        }
+                    });
+                });
+
             },
             error : function(data) {
                 MessageBox(data);
@@ -110,6 +123,28 @@ function LoadLoginForm(page) {
     });
 }
 
+function LoadEditPostForm(page) {
+    $('#blogcontent').empty();
+
+    $.ajax({
+        url: "/Blog/app/bloglist",
+        success: function(data) {
+            $('#updatePost').click(function() {
+                var postElem = $(this).parents('.post');
+                $.ajax({
+                    url: "/Blog/app/admin/editPost?id="+postElem.attr('id')+"&ajax=1",
+                    success: function(data) {
+                        $('#blogcontent').html(data);
+                    },
+                    error: function(data) {
+                        ErrorBox(data);
+                    }
+                });
+            });
+        }
+    });
+}
+
 var infoDialog = null;
 
 function ErrorBox(message) {
@@ -167,6 +202,7 @@ $(function() {
     LoadBlogContent();
     LoadTagStatistic();
     LoadPostForm();
+    //LoadEditPostForm();
     LoadLoginForm();
 
     // załadowanie gravatarów

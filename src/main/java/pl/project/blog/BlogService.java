@@ -34,6 +34,14 @@ public interface BlogService {
      *
      * @param post
      */
+
+    /*
+     *
+     * Metoda aktualizująca post
+     *
+     */
+    public Post updatePost(Post post);
+
     public void deletePost(Post post);
 
     /**
