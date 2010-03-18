@@ -6,14 +6,14 @@ function LoadBlogContent(page) {
 
     if (getMetaData('showLoginForm')) {
         $.ajax({
-           url: "/Blog/app/login",
-           success: function(data) {
-               $('#blogcontent').html(data);
-               $('#loginError').removeAttr('style');
-           },
-           error: function(data) {
-               MessageBox(data);
-           }
+            url: "/Blog/app/login",
+            success: function(data) {
+                $('#blogcontent').html(data);
+                $('#loginError').removeAttr('style');
+            },
+            error: function(data) {
+                MessageBox(data);
+            }
         });
     } else {
         $.ajax({
@@ -29,6 +29,18 @@ function LoadBlogContent(page) {
                         },
                         success: function(data) {
                             postElem.find('.comments').html(data);
+                        }
+                    });
+                });
+                $('#blogcontent .postmeta .permalink a').click(function() {
+                    var postElem = $(this).parents('.post');
+                    $.ajax({
+                        url: "/Blog/app/admin/delPost?id="+postElem.attr('id')+"&ajax=1" ,
+                        error: function(data) {
+                            ErrorBox(data);
+                        },
+                        success: function(data) {
+                            simpleMessageBox(data);
                         }
                     });
                 });
@@ -142,6 +154,17 @@ function MessageBox(message) {
             }
         }
 
+    });
+    $dialog.dialog('open');
+}
+
+function simpleMessageBox(message) {
+    var $dialog = $('<div></div>')
+    .html(message)
+    .dialog({
+        autoOpen: false,
+        modal: true,
+        title: 'Info'
     });
     $dialog.dialog('open');
 }
