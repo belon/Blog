@@ -23,55 +23,7 @@ function LoadBlogContent(page) {
 
                 // dodanie linków do 'Pokaż komentarze'
                 $('#blogcontent .comments_link a').click(function() {
-                    var postElem = $(this).parents('.post');
-                    $.ajax({
-                        url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
-                        error: function(data) {
-                            ErrorBox(data);
-                        },
-                        success: function(data) {
-                            postElem.find('.comments').html(data).find('.addcomment').click(function() {
-                                $.ajax({
-                                    url: "/Blog/app/addComment?id=" +postElem.attr('id')+"&ajax=1",
-                                    error: function(data) {
-                                        ErrorBox(data);
-                                    },
-                                    success: function(data) {
-
-                                        var $dialog = $('<div></div>')
-                                        .html(data)
-                                        .dialog({
-                                            width: 570,
-                                            height: 450,
-                                            modal: true,
-                                            title: 'Add comment',
-                                            buttons: {
-                                                Ok: function() {
-                                                   alert($(this).find('#addCommentForm').attr('action'));
-                                                   var me = this;
-                                                   $.ajax({
-                                                      type: "post",
-                                                      data: $(this).find('#addCommentForm').serialize(),
-                                                      url: $(this).find('#addCommentForm').attr('action'),
-                                                      error: function (data) {
-                                                          ErrorBox(data)
-                                                      },
-                                                      success: function(data) {
-                                                        $(me).dialog('close');
-                                                      }
-                                                   });
-                                                },
-                                                Cancel: function() {
-                                                    $(this).dialog('close');
-                                                }
-                                            }
-
-                                        });
-                                    }
-                                });
-                            });
-                        }
-                    });
+                    ReloadPosts(this);
                 });
 
                 // dodanie linków do 'Edytuj post'
@@ -256,5 +208,59 @@ $(function() {
     SyntaxHighlighter.config.stripBrs = true;
     SyntaxHighlighter.all();
 });
+
+
+function ReloadPosts(item) {
+    var postElem = $(item).parents('.post');
+    $.ajax({
+        url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
+        error: function(data) {
+            ErrorBox(data);
+        },
+        success: function(data) {
+            postElem.find('.comments').html(data).find('.addcomment').click(function() {
+                $.ajax({
+                    url: "/Blog/app/addComment?id=" +postElem.attr('id')+"&ajax=1",
+                    error: function(data) {
+                        ErrorBox(data);
+                    },
+                    success: function(data) {
+
+                        var $dialog = $('<div></div>')
+                        .html(data)
+                        .dialog({
+                            width: 570,
+                            height: 450,
+                            modal: true,
+                            title: 'Add comment',
+                            buttons: {
+                                Ok: function() {
+                                    var me = this;
+                                    $.ajax({
+                                        type: "post",
+                                        data: $(this).find('#addCommentForm').serialize(),
+                                        url: $(this).find('#addCommentForm').attr('action'),
+                                        error: function (data) {
+                                            ErrorBox(data)
+                                        },
+                                        success: function(data) {
+                                            $(me).dialog('close');
+                                            ReloadPosts(item);
+                                        }
+                                    });
+                                },
+                                Cancel: function() {
+                                    $(this).dialog('close');
+                                }
+                            }
+
+                        });
+                    }
+                });
+            });
+        }
+    });
+
+}
 
 
