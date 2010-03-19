@@ -34,11 +34,12 @@
                 <form:textarea path = "content" cols = "55" rows = "10" style = "background-color: white;" /><br/>
                 <form:errors path = "content" cssClass = "error" />
             </p>
-            <p style="margin-left: 4em;">
+<%--            <p style="margin-left: 4em;">
                 <input name = "submit" id = "addComment" value = "Dodaj komentarz" type = "submit"/>
-            </p>
+            </p>--%>
         </form:form>
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     //$("#addComment").bind("click", $("#addCommentForm"), submitForm);
 </script>
+--%>

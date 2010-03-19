@@ -29,7 +29,7 @@
                 <div class="postbottom">
                     <ul class="postmeta">
                         <li class="comments_link">
-                            <a href="#">Pokaż komentarze</a>
+                            <a href="#" onclick="return false;">Pokaż komentarze</a>
                         </li>
                         <security:authorize ifAllGranted="ROLE_ADMIN">
                             <li class="category_link"><a href="#">Edytuj post</a></li>

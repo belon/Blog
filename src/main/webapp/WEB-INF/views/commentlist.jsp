@@ -14,7 +14,8 @@
                 </c:forEach>
             </ol>
     </div>
+    <a href="#" onclick="return false;" class="addcomment">Dodaj komentarz</a>
     <div id="commentbtm"></div>
 </div>
 
-<%@include file="addComment.jsp" %>
+<%--<%@include file="addComment.jsp" %>--%>
