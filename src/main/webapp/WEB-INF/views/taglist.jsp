@@ -6,6 +6,8 @@
 <div id="taglist">
     <c:forEach var="curTag" items="${tags}">
         <c:choose>
+            <c:when test="${curTag.count <= 0}">
+            </c:when>
             <c:when test="${curTag.count > 0 && curTag.count < 5}">
                 <a id="${curTag.id}" href="#" class="tag_link" style="font-size: 1em;">${curTag.name}</a>
             </c:when>

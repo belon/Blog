@@ -20,7 +20,7 @@
                     <div class="tags">
                         Tagi:
                         <c:forEach var="tag" items="${curPost.tags}">
-                            ${tag.name} &nbsp;
+                            <a href="#" rel="${tag.id}" class="tag_link">${tag.name}</a> &nbsp;
                         </c:forEach>
                     </div>
                     <div class="comments">

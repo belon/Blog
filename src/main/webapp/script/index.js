@@ -1,7 +1,7 @@
 /**
  * This function loads post on the first page, starting at page page
  */
-function LoadBlogContent(page) {
+function LoadBlogContent(page,tag) {
     $('#blogcontent').empty();
 
     if (getMetaData('showLoginForm')) {
@@ -16,8 +16,12 @@ function LoadBlogContent(page) {
             }
         });
     } else {
+        var url = "/Blog/app/bloglist";
+        if (!(typeof tag == "undefined")) {
+            url = url + "?tagId="+tag+"&ajax=1"
+        }
         $.ajax({
-            url: "/Blog/app/bloglist",
+            url: url,
             success: function(data) {
                 $('#blogcontent').html(data);
 
@@ -53,6 +57,11 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+
+                // dodanie linków do tagów
+                $('#blogcontent .tag_link').click(function() {
+                    LoadBlogContent(1,$(this).attr('rel'));
+                });
             },
             error : function(data) {
                 MessageBox(data);
@@ -70,27 +79,7 @@ function LoadTagStatistic(page) {
             $('#tagStatistic').html(data);
 
             $('#tagStatistic #taglist .tag_link').click(function() {
-                $.ajax({
-                    url: "/Blog/app/bloglist?tagId="+this.id+"&ajax=1" ,
-                    success: function(data) {
-                        $('#blogcontent').html(data);
-                        $('#blogcontent .comments_link a').click(function() {
-                            var postElem = $(this).parents('.post');
-                            $.ajax({
-                                url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
-                                error: function(data) {
-                                    ErrorBox(data);
-                                },
-                                success: function(data) {
-                                    postElem.find('.comments').html(data);
-                                }
-                            });
-                        });
-                    },
-                    error: function(data) {
-                        ErrorBox(data);
-                    }
-                });
+                LoadBlogContent(1,this.id);
             });
         },
         error : function(data) {
