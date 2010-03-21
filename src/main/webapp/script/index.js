@@ -222,21 +222,25 @@ function ReloadPosts(item) {
                         ErrorBox(data);
                     },
                     success: function(data) {
-
-          
                         var $dialog = $('<div></div>')
                         .html(data)
                         .dialog({
-                            width: 570,
+                            width: 540,
                             height: 450,
                             modal: true,
                             title: 'Dodaj komentarz',
+                            open: function(e,u) {
+                                var me = this;
+                                $(this).find('#email').keyup(function() {
+                                    $(me).find('#gravatarnew').css('background-image',"url('"+getGravatarFor($(me).find('#email').val())+"')");
+                                });
+                            },
                             buttons: {
                                 Ok: function() {
-                                    if (!$(this).find('#addCommentForm').valid()) { return }
+                                    if (!$(this).find('#addCommentForm').valid()) {
+                                        return
+                                    }
                                     var me = this;
-                                    alert('ok');
-                                    return;
                                     $.ajax({
                                         type: "post",
                                         data: $(this).find('#addCommentForm').serialize(),
@@ -277,6 +281,7 @@ function ReloadPosts(item) {
                                 content: "Podaj treść komentarza"
                             }
                         });
+
                     }
                 });
             });
