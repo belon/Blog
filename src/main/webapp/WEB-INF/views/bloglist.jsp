@@ -10,7 +10,7 @@
             <div class="post" id="${curPost.id}">
                 <div class="postheader"></div>
                 <div class="postcontent">
-                    <span class="date rightalign">${curPost.createDate}</span>
+                    <span class="date rightalign"><fmt:formatDate value="${curPost.createDate}" type="both"/></span>
                     <div class="pt">
                         <h2>${curPost.title}</h2>
                     </div>
