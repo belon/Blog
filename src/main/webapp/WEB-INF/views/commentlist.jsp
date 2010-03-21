@@ -5,7 +5,7 @@
 
 <div class="commentlist">
     <div id="commentop"></div>
-    <h2>Komentarze</h2>
+    <h2 style="margin-top:10px;">Komentarze</h2>
         <div class="commentcontent">
             <ol>
                 <c:forEach var="comment" items="${comments}" varStatus="loopStatus">
