@@ -82,7 +82,7 @@ function LoadTagStatistic(page) {
                                     ErrorBox(data);
                                 },
                                 success: function(data) {
-                                    postElem.find('.comments').html(data)
+                                    postElem.find('.comments').html(data);
                                 }
                             });
                         });
@@ -183,7 +183,7 @@ function getMetaData(name) {
 }
 
 function getGravatarFor(email) {
-    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48&d=http://" + getMetaData('base_url') + "images/gravatar-48.png";
+    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48";
 }
 
 $(function() {
@@ -200,9 +200,6 @@ $(function() {
     LoadTagStatistic();
     LoadPostForm();
     LoadLoginForm();
-
-    // załadowanie gravatarów
-    $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));
 
     // Kolorowanie składni
     SyntaxHighlighter.config.stripBrs = true;
@@ -258,6 +255,7 @@ function ReloadPosts(item) {
                     }
                 });
             });
+            postElem.find('.gravatar').attr("src", function () { return getGravatarFor($(this).attr("src")); });
         }
     });
 

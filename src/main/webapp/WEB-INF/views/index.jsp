@@ -48,12 +48,6 @@
 
                     <div id="content">
                         <div id="left">
-                            <div id="gravatars">
-                                Przykładowe grawatary
-                                <img src="" alt="gravatar"/>
-                                <img src="" alt="gravatar"/>
-                                <img src="" alt="gravatar"/>
-                            </div>
                             <div id="blogcontent">
 
                             </div>
