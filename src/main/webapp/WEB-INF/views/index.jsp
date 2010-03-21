@@ -28,6 +28,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/md5.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.validate.js"></script>
     </head>
     <body>
         <div id="page">

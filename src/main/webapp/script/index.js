@@ -223,16 +223,20 @@ function ReloadPosts(item) {
                     },
                     success: function(data) {
 
+          
                         var $dialog = $('<div></div>')
                         .html(data)
                         .dialog({
                             width: 570,
                             height: 450,
                             modal: true,
-                            title: 'Add comment',
+                            title: 'Dodaj komentarz',
                             buttons: {
                                 Ok: function() {
+                                    if (!$(this).find('#addCommentForm').valid()) { return }
                                     var me = this;
+                                    alert('ok');
+                                    return;
                                     $.ajax({
                                         type: "post",
                                         data: $(this).find('#addCommentForm').serialize(),
@@ -251,11 +255,34 @@ function ReloadPosts(item) {
                                 }
                             }
 
+                        }).find('#addCommentForm').validate({
+                            rules: {
+                                author: {
+                                    required:true
+                                },
+                                email: {
+                                    required:true,
+                                    email:true
+                                },
+                                content: "required"
+                            },
+                            messages: {
+                                author: {
+                                    required: "Podaj swój login lub imię"
+                                },
+                                email: {
+                                    required: "Podaj swój e-mail",
+                                    email: "Błędny format adresu e-mail"
+                                },
+                                content: "Podaj treść komentarza"
+                            }
                         });
                     }
                 });
             });
-            postElem.find('.gravatar').attr("src", function () { return getGravatarFor($(this).attr("src")); });
+            postElem.find('.gravatar').attr("src", function () {
+                return getGravatarFor($(this).attr("src"));
+            });
         }
     });
 
