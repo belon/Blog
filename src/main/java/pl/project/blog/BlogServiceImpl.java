@@ -244,7 +244,7 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
             for (int i = 0; i < 10; i++) {
                 Tag tag = new Tag();
                 tag.setName("tag" + i);
-                tag.setCount(i * 2 + 1);
+                tag.setCount(0);
                 persist(tag);
                 tags.add(tag);
             }
