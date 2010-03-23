@@ -2,6 +2,8 @@ package pl.project.blog.domain;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.List;
 import org.jcouchdb.db.Database;
 import org.springmodules.validation.bean.conf.loader.annotation.handler.NotBlank;
@@ -46,6 +48,34 @@ public class Post extends AppDocument implements Comparable<Post> {
         if (tag != null) {
             tags.add(tag);
         }
+    }
+
+     /**
+     * Metoda zwraca true jeśli post został dodany
+     * w danym dniu
+     */
+    public Boolean isFromDate(String date) {
+        String s = createDate.toString();
+        String[] tmp = s.split(" ");
+        Map<String, String> months = new HashMap<String, String>();
+        months.put("Jan", "01");
+        months.put("Feb", "02");
+        months.put("Mar", "03");
+        months.put("Apr", "04");
+        months.put("May", "05");
+        months.put("Jun", "06");
+        months.put("Jul", "07");
+        months.put("Aug", "08");
+        months.put("Sep", "09");
+        months.put("Oct", "10");
+        months.put("Nov", "11");
+        months.put("Dec", "12");
+
+        String d = tmp[5] + "-" + months.get(tmp[1]) + "-" + tmp[2];
+        if (d.equals(date)) {
+            return true;
+        }
+        return false;
     }
 
     /**

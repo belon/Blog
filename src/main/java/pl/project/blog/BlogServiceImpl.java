@@ -286,13 +286,13 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
 
                 post.setTitle("Title " + i);
                 post.setContent("Content " + i);
-                post.setCreateDate(new Date(110, 10, 22, 21, 36, 1 + i));
+                post.setCreateDate(new Date(110, 2, 20+i%2, 16, 36, 1 + i));
 
                 for (int l = 0; l < 7; l++) {
                     Comment comment = new Comment();
                     comment.setAuthor("Jarek" + l);
                     comment.setContent("Tekst komentarza" + l);
-                    comment.setCreated(new Date(110, 10, 22, 21, 36, 1 + l));
+                    comment.setCreated(new Date(110, 2, 20+l%3, 16, 36, 1 + l));
 
                     post.addComment(comment);
                 }

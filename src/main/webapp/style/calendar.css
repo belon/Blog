@@ -1,0 +1,100 @@
+.cal {
+    text-align:center;
+    width:260px;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    background:#fafafa;
+    border: solid 1px #ddd;
+    margin:3px;
+    padding:0.8em
+}
+.cal .month {
+    color:#002a5f;
+    font-weight:bold;
+    margin:0.2em 0;
+    padding:0.4em;
+    font-size:1.5em;
+    text-align:center
+}
+.cal a[rel=prev], a[rel=next] { 
+    display:block;
+    margin:0.3em 1em;
+    overflow:hidden;
+    width:32px;
+    height:32px;
+    text-indent:-999em;
+    background: transparent url('../images/icons.png') no-repeat scroll 0 0
+}
+.cal a {
+    text-decoration:none
+}
+.cal a[rel=next] {
+    float:left;
+    background-position: -32px -32px
+}
+.cal a[rel=prev] {
+    float:right;
+    background-position: 0 -32px
+}
+.cal a[rel=next]:hover {
+    background-position: -32px 0
+}
+.cal a[rel=prev]:hover {
+    background-position: 0 0
+}
+.cal table {
+    background:#fbfbfb;
+    width:100%;
+    margin:0 0 0.5em 0;
+    padding:0;
+    border: solid thin #f2f2f2;
+    border-collapse: separate !important
+}
+.cal td, .cal th {
+    width:14.3%;
+    height:2.3em;
+    border: solid thin #ddd;
+    padding:0
+}
+.cal tbody td {
+    text-align:center;
+    vertical-align:middle;
+    height: 15px;
+}
+.cal tbody a {
+    display:block;
+    width:100%;
+    line-height:280%
+}
+.cal td.out {
+    background:#f8f8f8;
+    font-family:Arial
+}
+.cal td.out a { 
+    color:#aaa
+}
+.cal .weekend {
+    background:#f2f2f2
+}
+.cal .weekend.out {
+    background:#f0f0f0
+}
+.cal td.current {
+    font-weight:bold;
+    padding:0;
+    background: #8de !important
+} .cal td.current a{
+    color:#002a5f;
+}
+.cal td.hover, .cal td.weekend.out.hover {
+    color:#224cff;
+    background:#ff8;
+    cursor:pointer
+}
+.cal td.today {
+    font-weight:bold;
+    border:solid 1px red
+} .cal td.today a, .cal a[rel=today]{
+    color:Red
+}
+

@@ -1,7 +1,7 @@
 /**
  * This function loads post on the first page, starting at page page
  */
-function LoadBlogContent(page,tag) {
+function LoadBlogContent(page,tag,date) {
     if (getMetaData('showLoginForm')) {
         $.ajax({
             url: "/Blog/app/login",
@@ -18,6 +18,9 @@ function LoadBlogContent(page,tag) {
         var url = "/Blog/app/bloglist";
         if (!(typeof tag == "undefined")) {
             url = url + "?tagId="+tag+"&ajax=1"
+        }
+        if (!(typeof date == "undefined")) {
+            url = url + "?date="+date+"&ajax=1"
         }
         $.ajax({
             url: url,
@@ -234,6 +237,38 @@ $(function() {
         click: function(event, menuItem) {
             return true;
         }
+    });
+
+    $().ready(function () {
+        $("#cal-event").calendar({
+            dateChanged: function (date) {
+                $.ajax({
+                    url: "/Blog/app/bloglist?date="+date.toLocaleFormat("%Y-%m-%d"),
+                    success: function(data) {
+                        $('#blogcontent').html(data);
+                    },
+                    error: function(data) {
+                        ErrorBox(data);
+                    }
+                });
+                return false;
+            }
+        });
+        /*
+        $("#cal-event").calendar({
+            dateChanged: function (date) {
+                alert('You clicked a ' + date.toDateString());
+                return false;
+            }
+        })
+        $("#cal-cust").calendar({
+            year: 2008,
+            month: 3,
+            current: new Date(2008, 3, 2)
+        });
+        $("#cal-url").calendar({
+            templateUrl: 'bloglist?date=year-month-day'
+        });*/
     });
 
     LoadBlogContent();

@@ -20,6 +20,7 @@
         <link href="${pageContext.request.contextPath}/style/ui-lightness/style.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shCore.css" rel="stylesheet" type="text/css" />
         <link href="${pageContext.request.contextPath}/style/syntaxhighlighter/shThemeDefault.css" rel="stylesheet" type="text/css" />
+        <link href="${pageContext.request.contextPath}/style/calendar.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.easing.min.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.lavalamp.min.js"></script>
@@ -31,6 +32,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.validate.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.calendar-1.0.js"></script>
     </head>
     <body>
         <div id="page">
@@ -55,20 +57,35 @@
                             </div>
                         </div>
                         <div id="sidebar">
-                            <h3>Archiwum</h3>
-                            <ul>
-                                <li class="cat-item"><a href="#">Luty 2010</a></li>
-                            </ul>
                             <h3>Admin</h3>
                             <ul>
-                                <% if(!request.isUserInRole("ROLE_ADMIN")) { %>
-                                    <li class="cat-item"><blog:link id="loginForm" href="#">Zaloguj się</blog:link></li>
-                                <% } %>
+                                <% if (!request.isUserInRole("ROLE_ADMIN")) {%>
+                                <li class="cat-item"><blog:link id="loginForm" href="#">Zaloguj się</blog:link></li>
+                                <% }%>
                                 <security:authorize ifAllGranted="ROLE_ADMIN">
                                     <li class="cat-item"><blog:link href="/app/logout">Wyloguj</blog:link></li>
                                     <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
                                 </security:authorize>
                             </ul>
+                            <h3>Kalendarium</h3>
+                            <div class="cal" id="cal-event">
+                                <a rel="prev" href="">Prev</a>
+                                <a rel="next" href="">Next</a>
+                                <h3 class="month"></h3>
+                                <table cellspacing="0">
+                                    <thead>
+                                        <tr><th class="weekend">Nie</th><th>Pon</th><th>Wto</th><th>Śro</th><th>Czw</th><th>Pią</th><th class="weekend">Sob</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td class="weekend out"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
+                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
+                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
+                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
+                                        <tr><td class="weekend"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="weekend out"><a href=""></a></td></tr>
+                                        <tr><td class="weekend out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="weekend out"><a href=""></a></td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
                             <h3>Tagi</h3>
                             <div id="tagStatistic" style="padding: 10px;">
                             </div>

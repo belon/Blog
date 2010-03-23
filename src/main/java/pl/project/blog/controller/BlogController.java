@@ -266,13 +266,20 @@ public class BlogController {
     @RequestMapping("/bloglist")
     public String showBlogList(
             ModelMap model,
-            @RequestParam(value = "tagId", required = false) String tagId) {
+            @RequestParam(value = "tagId", required = false) String tagId,
+            @RequestParam(value = "date", required = false) String date) {
 
         List<Post> posts = new ArrayList<Post>();
 
         if (tagId != null) {
             for (Post post : blogService.listPosts(true)) {
                 if (post.containTag(tagId)) {
+                    posts.add(post);
+                }
+            }
+        } else if (date != null) {
+            for (Post post : blogService.listPosts(true)) {
+                if (post.isFromDate(date)) {
                     posts.add(post);
                 }
             }
