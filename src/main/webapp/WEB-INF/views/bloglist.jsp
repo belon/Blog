@@ -41,3 +41,7 @@
         </div>
     </c:forEach>
 </div>
+
+<script type="text/javascript">
+$(function(){ $("#bloglist").pagination(); });
+</script>

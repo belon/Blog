@@ -27,6 +27,7 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/index.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/blog.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/md5.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/paginator.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.validate.js"></script>
@@ -55,17 +56,9 @@
                             </div>
                         </div>
                         <div id="sidebar">
-                            <h3>Kategorie</h3>
-                            <ul>
-                                <li class="cat-item"><a href="#">Lorem Ipsum </a></li>
-                            </ul>
                             <h3>Archiwum</h3>
                             <ul>
                                 <li class="cat-item"><a href="#">Luty 2010</a></li>
-                            </ul>
-                            <h3>Linki</h3>
-                            <ul>
-                                <li class="cat-item"><a href="#">Themes</a></li>
                             </ul>
                             <h3>Admin</h3>
                             <ul>
@@ -77,7 +70,7 @@
                                     <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
                                 </security:authorize>
                             </ul>
-
+                            <h3>Tagi</h3>
                             <div id="tagStatistic">
                             </div>
                         </div>
