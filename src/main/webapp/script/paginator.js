@@ -53,11 +53,11 @@
 
 	var lastPageSymbol = '>>'; // to indicate Last Page
 
-	var separator = ' | '; // To separate paginator's items
+	var separator = ''; // To separate paginator's items
 
 	var paginatorPosition = 'both'; // where you want the paginator to be. Accepted values are 'top','bottom','both'
 
-	var paginatorStyle = 2; // To define which style of paginator you need.
+	var paginatorStyle = 1; // To define which style of paginator you need.
 	// 1 - for << | < | 1 | 2 | 3 | > | >>
 	// 2 - for << | < | 1/8 | > | >>
 	// 3 - for < | 1 | 2 | 3 | >
@@ -75,9 +75,9 @@
 
 	var paginatorValues = Array(5,10,15,20,25,30); // list of values for above option (enableSelectNoItems).
 
-    var anchorLink = 'javascript:void(0);'; // if you want to change href of the paginator anchor text (links for page) to '#' or to something else. As # is append on the address bar upon clicking I used javascript:void(); which is clean.
+    var anchorLink = '#' // javascript:void(0);'; // if you want to change href of the paginator anchor text (links for page) to '#' or to something else. As # is append on the address bar upon clicking I used javascript:void(); which is clean.
     
-    var showIfSinglePage = true; // set it tp false if you don't want to show paginator incase there is only one page, true if show paginator even if there is just one page.
+    var showIfSinglePage = false; // set it tp false if you don't want to show paginator incase there is only one page, true if show paginator even if there is just one page.
 
 
 //-----------functions starts----------------------------------------------------

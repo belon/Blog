@@ -4,6 +4,32 @@
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+<style type="text/css">
+.paginator{
+    text-align:center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.active{
+    color:black;
+    border: solid 1px black;
+    padding:3px 5px;
+    margin:5px;
+    text-decoration:none;
+}
+
+.inactive{
+    color:gray;
+    cursor:default;
+    text-decoration:none;
+    border: solid 1px gray;
+    background-color: #0099FF;
+    padding:3px 5px;
+    margin:5px;
+}
+</style>
+
 <div id="bloglist">
     <c:forEach var="curPost" items="${posts}" varStatus="status">
         <div class="blogentry">
@@ -17,7 +43,7 @@
                     <div>
                         <pre style="font-size: 14px;">${curPost.content}</pre>
                     </div>
-                    <div class="tags">
+                    <div class="tags" style="margin-top:10px;">
                         Tagi:
                         <c:forEach var="tag" items="${curPost.tags}">
                             <a href="#" rel="${tag.id}" class="tag_link">${tag.name}</a> &nbsp;

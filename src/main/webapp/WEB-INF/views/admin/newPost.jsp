@@ -23,7 +23,8 @@
 
                     <div class = "tagss">
                         <p>
-                            <label for = "tags">Tagi</label>
+                            <a href="#" id="newTag">Dodaj nowy tag</a>
+                            <label for = "tags">Dostępne tagi</label>
                             <form:select path = "tagIds"
                                          items = "${tags}"
                                          itemValue = "id"

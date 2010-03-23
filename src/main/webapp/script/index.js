@@ -96,6 +96,57 @@ function LoadPostForm(page) {
             url: "/Blog/app/admin/newPost",
             success: function(data) {
                 $('#blogcontent').html(data);
+
+                $('#blogcontent').html(data).find('#newTag').click(function() {
+                   $.ajax({
+                      url: '/Blog/app/admin/newTag?ajax=1',
+                      success: function(data) {
+                          var $dialog = $('<div></div>')
+                          .html(data)
+                          .dialog({
+                             modal: true,
+                             title: 'Dodaj tag',
+                             buttons: {
+                                 Ok: function() {
+                                    if (!$(this).find('#newTagForm').valid()) {
+                                        return
+                                    }
+                                    var t = this;
+                                    $.ajax({
+                                        type: "post",
+                                        data: $(this).find('#newTagForm').serialize(),
+                                        url: $(this).find('#newTagForm').attr('action'),
+                                        error: function (data) {
+                                            ErrorBox(data)
+                                        },
+                                        success: function(data) {
+                                            $(t).dialog('close');
+                                        }
+                                    });
+                                },
+                                Cancel: function() {
+                                    $(this).dialog('close');
+                                }
+                             }
+                          }).find('#newTagForm').validate({
+                             rules: {
+                                 name: {
+                                     required: true
+                                 }
+                             },
+                             messages: {
+                                 name: {
+                                     required: 'Nazwa jest wymagana'
+                                 }
+                             }
+                          });
+                      },
+                      error: function(data) {
+                          ErrorBox(data);
+                      }
+                   });
+                });
+
             },
             error: function(data) {
                 ErrorBox(data);
@@ -177,7 +228,7 @@ function getGravatarFor(email) {
 
 $(function() {
 
-    $("#1, #2, #3").lavaLamp({
+    $("#l1, #l2, #l3").lavaLamp({
         fx: "backout",
         speed: 700,
         click: function(event, menuItem) {

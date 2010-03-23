@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import pl.project.blog.domain.AppDocument;
 import pl.project.blog.domain.Comment;
+import pl.project.blog.domain.Tag;
 import pl.project.blog.util.Messages;
 
 /**
@@ -85,7 +86,7 @@ public class BlogController {
      */
     @RequestMapping("/admin/newPost")
     public ModelAndView showNewPostForm() {
-        return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags(false));
+        return new ModelAndView("admin/newPost", "postObject", new Post()).addObject("tags", blogService.getAvailableTags(true));
     }
 
     @RequestMapping("/admin/editPost")
@@ -93,6 +94,22 @@ public class BlogController {
         ModelAndView modelAndView = new ModelAndView("admin/editPost", "post", blogService.getPost(id, true)).addObject("tags", blogService.getAvailableTags(false));
 
         return modelAndView;
+    }
+
+    @RequestMapping("/admin/newTag")
+    public ModelAndView showNewTagForm() {
+        return new ModelAndView("admin/newTag", "tagObject", new Tag());
+    }
+
+    @RequestMapping("/admin/newTag/create")
+    public ModelAndView createTag(HttpServletRequest request,
+                                  @RequestParam(value = "ajax", required = false) String ajax,
+                                  @ModelAttribute("tagObject") Tag tag,
+                                  BindingResult bindingResult) {
+
+        blogService.createTag(tag);
+
+        return showNewPostForm();
     }
 
     /*
