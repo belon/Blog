@@ -4,7 +4,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="blog" tagdir="/WEB-INF/tags" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <title>Blog</title>
@@ -26,8 +27,10 @@
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/index.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/blog.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/md5.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/paginator.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shCore.js"></script>
         <script type="text/javascript" src="${pageContext.request.contextPath}/script/syntaxhighlighter/shBrushJava.js"></script>
+        <script type="text/javascript" src="${pageContext.request.contextPath}/script/jquery.validate.js"></script>
     </head>
     <body>
         <div id="page">
@@ -37,39 +40,24 @@
                     <div id="header">
                         <div id="headercontent"><span id="sitename">Blog</span></div>
                         <div id="topnav">
-                            <ul class="lavaLampWithImage" id="1">
+                            <ul class="lavaLampWithImage" id="l1">
                                 <li class="current"><blog:link href="/app/index">Home</blog:link></li>
-                                <li><a href="">Styles</a></li>
-                                <li><a href="">Notes</a></li>
-                                <li><a href="">Credits</a></li>
+                                <li><a href="#">O Blogu</a></li>
+                                <li><a href="#">Księga Gości</a></li>
                             </ul>
                         </div>
                     </div>
 
                     <div id="content">
                         <div id="left">
-                            <div id="gravatars">
-                                Przykładowe grawatary
-                                <img src="" alt="gravatar"/>
-                                <img src="" alt="gravatar"/>
-                                <img src="" alt="gravatar"/>
-                            </div>
                             <div id="blogcontent">
 
                             </div>
                         </div>
                         <div id="sidebar">
-                            <h3>Kategorie</h3>
-                            <ul>
-                                <li class="cat-item"><a href="">Lorem Ipsum </a></li>
-                            </ul>
                             <h3>Archiwum</h3>
                             <ul>
-                                <li class="cat-item"><a href="">Luty 2010</a></li>
-                            </ul>
-                            <h3>Linki</h3>
-                            <ul>
-                                <li class="cat-item"><a href="">Themes</a></li>
+                                <li class="cat-item"><a href="#">Luty 2010</a></li>
                             </ul>
                             <h3>Admin</h3>
                             <ul>
@@ -81,14 +69,14 @@
                                     <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
                                 </security:authorize>
                             </ul>
-
-                            <div id="tagStatistic">
+                            <h3>Tagi</h3>
+                            <div id="tagStatistic" style="padding: 10px;">
                             </div>
                         </div>
                         <div class="clear"></div>
                     </div>
 
-                    <div id="footer"> Copyright &copy; Yoursitename.com
+                    <div id="footer"> Copyright &copy; Blogus.com
                         <div class="credit"><a href="http://ramblingsoul.com">CSS Template</a> by ramblingsoul</div>
                     </div>
                 </div>

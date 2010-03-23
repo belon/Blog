@@ -1,7 +1,7 @@
 /**
  * This function loads post on the first page, starting at page page
  */
-function LoadBlogContent(page) {
+function LoadBlogContent(page,tag) {
     $('#blogcontent').empty();
 
     if (getMetaData('showLoginForm')) {
@@ -16,23 +16,18 @@ function LoadBlogContent(page) {
             }
         });
     } else {
+        var url = "/Blog/app/bloglist";
+        if (!(typeof tag == "undefined")) {
+            url = url + "?tagId="+tag+"&ajax=1"
+        }
         $.ajax({
-            url: "/Blog/app/bloglist",
+            url: url,
             success: function(data) {
                 $('#blogcontent').html(data);
 
                 // dodanie linków do 'Pokaż komentarze'
                 $('#blogcontent .comments_link a').click(function() {
-                    var postElem = $(this).parents('.post');
-                    $.ajax({
-                        url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
-                        error: function(data) {
-                            ErrorBox(data);
-                        },
-                        success: function(data) {
-                            postElem.find('.comments').html(data);
-                        }
-                    });
+                    ReloadPosts(this);
                 });
 
                 // dodanie linków do 'Edytuj post'
@@ -62,6 +57,11 @@ function LoadBlogContent(page) {
                         }
                     });
                 });
+
+                // dodanie linków do tagów
+                $('#blogcontent .tag_link').click(function() {
+                    LoadBlogContent(1,$(this).attr('rel'));
+                });
             },
             error : function(data) {
                 MessageBox(data);
@@ -79,27 +79,7 @@ function LoadTagStatistic(page) {
             $('#tagStatistic').html(data);
 
             $('#tagStatistic #taglist .tag_link').click(function() {
-                $.ajax({
-                    url: "/Blog/app/bloglist?tagId="+this.id+"&ajax=1" ,
-                    success: function(data) {
-                        $('#blogcontent').html(data);
-                        $('#blogcontent .comments_link a').click(function() {
-                            var postElem = $(this).parents('.post');
-                            $.ajax({
-                                url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
-                                error: function(data) {
-                                    ErrorBox(data);
-                                },
-                                success: function(data) {
-                                    postElem.find('.comments').html(data);
-                                }
-                            });
-                        });
-                    },
-                    error: function(data) {
-                        ErrorBox(data);
-                    }
-                });
+                LoadBlogContent(1,this.id);
             });
         },
         error : function(data) {
@@ -116,6 +96,57 @@ function LoadPostForm(page) {
             url: "/Blog/app/admin/newPost",
             success: function(data) {
                 $('#blogcontent').html(data);
+
+                $('#blogcontent').html(data).find('#newTag').click(function() {
+                   $.ajax({
+                      url: '/Blog/app/admin/newTag?ajax=1',
+                      success: function(data) {
+                          var $dialog = $('<div></div>')
+                          .html(data)
+                          .dialog({
+                             modal: true,
+                             title: 'Dodaj tag',
+                             buttons: {
+                                 Ok: function() {
+                                    if (!$(this).find('#newTagForm').valid()) {
+                                        return
+                                    }
+                                    var t = this;
+                                    $.ajax({
+                                        type: "post",
+                                        data: $(this).find('#newTagForm').serialize(),
+                                        url: $(this).find('#newTagForm').attr('action'),
+                                        error: function (data) {
+                                            ErrorBox(data)
+                                        },
+                                        success: function(data) {
+                                            $(t).dialog('close');
+                                        }
+                                    });
+                                },
+                                Cancel: function() {
+                                    $(this).dialog('close');
+                                }
+                             }
+                          }).find('#newTagForm').validate({
+                             rules: {
+                                 name: {
+                                     required: true
+                                 }
+                             },
+                             messages: {
+                                 name: {
+                                     required: 'Nazwa jest wymagana'
+                                 }
+                             }
+                          });
+                      },
+                      error: function(data) {
+                          ErrorBox(data);
+                      }
+                   });
+                });
+
             },
             error: function(data) {
                 ErrorBox(data);
@@ -192,12 +223,12 @@ function getMetaData(name) {
 }
 
 function getGravatarFor(email) {
-    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48&d=http://" + getMetaData('base_url') + "images/gravatar-48.png";
+    return "http://gravatar.com/avatar/" + hex_md5(email) + "?s=48";
 }
 
 $(function() {
 
-    $("#1, #2, #3").lavaLamp({
+    $("#l1, #l2, #l3").lavaLamp({
         fx: "backout",
         speed: 700,
         click: function(event, menuItem) {
@@ -209,13 +240,97 @@ $(function() {
     LoadTagStatistic();
     LoadPostForm();
     LoadLoginForm();
-
-    // załadowanie gravatarów
-    $('#gravatars img').attr("src", getGravatarFor("jaroslaw.bela@gmail.com"));
-
+    
     // Kolorowanie składni
     SyntaxHighlighter.config.stripBrs = true;
     SyntaxHighlighter.all();
 });
+
+
+function ReloadPosts(item) {
+    var postElem = $(item).parents('.post');
+    $.ajax({
+        url: "/Blog/app/commentlist?id="+postElem.attr('id')+"&ajax=1" ,
+        error: function(data) {
+            ErrorBox(data);
+        },
+        success: function(data) {
+            postElem.find('.comments').html(data).find('.addcomment').click(function() {
+                $.ajax({
+                    url: "/Blog/app/addComment?id=" +postElem.attr('id')+"&ajax=1",
+                    error: function(data) {
+                        ErrorBox(data);
+                    },
+                    success: function(data) {
+                        var $dialog = $('<div></div>')
+                        .html(data)
+                        .dialog({
+                            width: 540,
+                            height: 450,
+                            modal: true,
+                            title: 'Dodaj komentarz',
+                            open: function(e,u) {
+                                var me = this;
+                                $(this).find('#email').keyup(function() {
+                                    $(me).find('#gravatarnew').css('background-image',"url('"+getGravatarFor($(me).find('#email').val())+"')");
+                                });
+                            },
+                            buttons: {
+                                Ok: function() {
+                                    if (!$(this).find('#addCommentForm').valid()) {
+                                        return
+                                    }
+                                    var me = this;
+                                    $.ajax({
+                                        type: "post",
+                                        data: $(this).find('#addCommentForm').serialize(),
+                                        url: $(this).find('#addCommentForm').attr('action'),
+                                        error: function (data) {
+                                            ErrorBox(data)
+                                        },
+                                        success: function(data) {
+                                            $(me).dialog('close');
+                                            ReloadPosts(item);
+                                        }
+                                    });
+                                },
+                                Cancel: function() {
+                                    $(this).dialog('close');
+                                }
+                            }
+
+                        }).find('#addCommentForm').validate({
+                            rules: {
+                                author: {
+                                    required:true
+                                },
+                                email: {
+                                    required:true,
+                                    email:true
+                                },
+                                content: "required"
+                            },
+                            messages: {
+                                author: {
+                                    required: "Podaj swój login lub imię"
+                                },
+                                email: {
+                                    required: "Podaj swój e-mail",
+                                    email: "Błędny format adresu e-mail"
+                                },
+                                content: "Podaj treść komentarza"
+                            }
+                        });
+
+                    }
+                });
+            });
+            postElem.find('.gravatar').attr("src", function () {
+                return getGravatarFor($(this).attr("src"));
+            });
+        }
+    });
+
+}
 
 

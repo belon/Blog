@@ -138,6 +138,18 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
         return comment;
     }
 
+    public Tag createTag(Tag tag) {
+        try {
+            persist(tag);
+        } catch (IllegalStateException ex) {
+            log.error("Document already had a revision set!");
+        } catch (UpdateConflictException ex) {
+            log.error("There's an update conflict while updating the document!");
+        }
+
+        return tag;
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -244,7 +256,7 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
             for (int i = 0; i < 10; i++) {
                 Tag tag = new Tag();
                 tag.setName("tag" + i);
-                tag.setCount(i * 2 + 1);
+                tag.setCount(0);
                 persist(tag);
                 tags.add(tag);
             }
@@ -330,4 +342,5 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     private void delete(String id, String rev) {
         database.delete(id, rev);
     }
+
 }
