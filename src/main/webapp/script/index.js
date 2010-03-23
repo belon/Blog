@@ -2,12 +2,11 @@
  * This function loads post on the first page, starting at page page
  */
 function LoadBlogContent(page,tag) {
-    $('#blogcontent').empty();
-
     if (getMetaData('showLoginForm')) {
         $.ajax({
             url: "/Blog/app/login",
             success: function(data) {
+                $('#blogcontent').empty();
                 $('#blogcontent').html(data);
                 $('#loginError').removeAttr('style');
             },
@@ -23,6 +22,7 @@ function LoadBlogContent(page,tag) {
         $.ajax({
             url: url,
             success: function(data) {
+                $('#blogcontent').empty();
                 $('#blogcontent').html(data);
 
                 // dodanie linków do 'Pokaż komentarze'
@@ -71,11 +71,10 @@ function LoadBlogContent(page,tag) {
 }
 
 function LoadTagStatistic(page) {
-    $('#tagStatistic').empty();
-
     $.ajax({
         url: "/Blog/app/taglist?ajax=1",
         success: function(data) {
+            $('#tagStatistic').empty();
             $('#tagStatistic').html(data);
 
             $('#tagStatistic #taglist .tag_link').click(function() {
@@ -98,53 +97,56 @@ function LoadPostForm(page) {
                 $('#blogcontent').html(data);
 
                 $('#blogcontent').html(data).find('#newTag').click(function() {
-                   $.ajax({
-                      url: '/Blog/app/admin/newTag?ajax=1',
-                      success: function(data) {
-                          var $dialog = $('<div></div>')
-                          .html(data)
-                          .dialog({
-                             modal: true,
-                             title: 'Dodaj tag',
-                             buttons: {
-                                 Ok: function() {
-                                    if (!$(this).find('#newTagForm').valid()) {
-                                        return
-                                    }
-                                    var t = this;
-                                    $.ajax({
-                                        type: "post",
-                                        data: $(this).find('#newTagForm').serialize(),
-                                        url: $(this).find('#newTagForm').attr('action'),
-                                        error: function (data) {
-                                            ErrorBox(data)
-                                        },
-                                        success: function(data) {
-                                            $(t).dialog('close');
+                    $.ajax({
+                        url: '/Blog/app/admin/newTag?ajax=1',
+                        success: function(data) {
+                            var $dialog = $('<div></div>')
+                            .html(data)
+                            .dialog({
+                                modal: true,
+                                title: 'Dodaj tag',
+                                buttons: {
+                                    Ok: function() {
+                                        var newTagForm = $(this).find('#newTagForm');
+                                        if (!newTagForm.valid()) {
+                                            return
                                         }
-                                    });
-                                },
-                                Cancel: function() {
-                                    $(this).dialog('close');
+                                        var t = this;
+                                        $.ajax({
+                                            type: "post",
+                                            data: newTagForm.serialize(),
+                                            dataType: "json",
+                                            url: newTagForm.attr('action'),
+                                            error: function (data) {
+                                                ErrorBox(data)
+                                            },
+                                            success: function(data) {
+                                                $(t).dialog('close');
+                                                $('#availableTags').append($('<option value="' + data.tagId + '">' + data.tagName + '</option>'));
+                                            }
+                                        });
+                                    },
+                                    Cancel: function() {
+                                        $(this).dialog('close');
+                                    }
                                 }
-                             }
-                          }).find('#newTagForm').validate({
-                             rules: {
-                                 name: {
-                                     required: true
-                                 }
-                             },
-                             messages: {
-                                 name: {
-                                     required: 'Nazwa jest wymagana'
-                                 }
-                             }
-                          });
-                      },
-                      error: function(data) {
-                          ErrorBox(data);
-                      }
-                   });
+                            }).find('#newTagForm').validate({
+                                rules: {
+                                    name: {
+                                        required: true
+                                    }
+                                },
+                                messages: {
+                                    name: {
+                                        required: 'Nazwa jest wymagana'
+                                    }
+                                }
+                            });
+                        },
+                        error: function(data) {
+                            ErrorBox(data);
+                        }
+                    });
                 });
 
             },
@@ -211,11 +213,9 @@ function simpleMessageBox(message) {
     var $dialog = $('<div></div>')
     .html(message)
     .dialog({
-        autoOpen: false,
         modal: true,
         title: 'Info'
     });
-    $dialog.dialog('open');
 }
 
 function getMetaData(name) {

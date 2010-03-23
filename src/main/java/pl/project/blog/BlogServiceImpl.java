@@ -251,15 +251,33 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     private void initialize() {
 
         // utwórz przykładowe tagi
-        List<Tag> tags = getAvailableTags(false);
+        List<Tag> tags = getAvailableTags(true);
         if (tags.isEmpty()) {
-            for (int i = 0; i < 10; i++) {
-                Tag tag = new Tag();
-                tag.setName("tag" + i);
-                tag.setCount(0);
-                persist(tag);
-                tags.add(tag);
-            }
+            Tag tag = new Tag();
+            tag.setName("java");
+            tag.setCount(0);
+            persist(tag);
+            tags.add(tag);
+            tag = new Tag();
+            tag.setName("javascript");
+            tag.setCount(0);
+            persist(tag);
+            tags.add(tag);
+            tag = new Tag();
+            tag.setName("eclipse");
+            tag.setCount(0);
+            persist(tag);
+            tags.add(tag);
+            tag = new Tag();
+            tag.setName("netbeans");
+            tag.setCount(0);
+            persist(tag);
+            tags.add(tag);
+            tag = new Tag();
+            tag.setName("couchdb");
+            tag.setCount(0);
+            persist(tag);
+            tags.add(tag);
         }
 
         if (listPosts(false).isEmpty()) {
@@ -279,10 +297,6 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
                     post.addComment(comment);
                 }
                 post.addTag(tags.get(i));
-                post.addTag(tags.get(i + 1));
-                post.addTag(tags.get(i + 2));
-                post.addTag(tags.get(i + 3));
-                post.addTag(tags.get(i + 4));
 
                 persist(post);
             }
@@ -342,5 +356,4 @@ public class BlogServiceImpl implements BlogService, InitializingBean {
     private void delete(String id, String rev) {
         database.delete(id, rev);
     }
-
 }

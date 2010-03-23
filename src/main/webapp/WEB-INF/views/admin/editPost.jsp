@@ -48,19 +48,15 @@
                             <form:input path = "title" size = "40" tabindex = "1" /><br/>
                             <form:errors path = "title" cssClass = "error" />
                         </p>
-
-                        <p>
-                            <label for = "author">Autor</label>
-                            <form:input path = "author" size = "25" tabindex = "2" /><br/>
-                            <form:errors path = "author" cssClass = "error" />
-                        </p>
                     </div>
 
-                    <p>
-                        <label for = "content">Treść</label>
-                        <form:textarea path="content" cols = "68" rows = "15" tabindex = "4" cssStyle="background-color:white" />
-                        <form:errors path = "content" cssClass = "error" />
-                    </p>
+                    <div style="margin-top: 70px;">
+                        <p>
+                            <label for="content">Treść</label>
+                            <form:textarea path="content" cols = "68" rows = "15" tabindex = "4" cssStyle="background-color:white" />
+                            <form:errors path = "content" cssClass = "error" />
+                        </p>
+                    </div>
 
                     <p>
                         <input id = "ok"

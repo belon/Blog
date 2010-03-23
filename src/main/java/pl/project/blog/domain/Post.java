@@ -19,8 +19,6 @@ public class Post extends AppDocument implements Comparable<Post> {
     String title;
     @NotBlank(errorCode = "field.content.required")
     String content;
-    @NotBlank(errorCode = "field.author.required")
-    String author;
     Date createDate;
     Date modifyDate;
     List<Comment> comments = new ArrayList<Comment>();
@@ -113,9 +111,6 @@ public class Post extends AppDocument implements Comparable<Post> {
     }
 
     public void setContent(String content) {
-//        if (content != null) {
-//            content = content.replaceAll("\r\n", "<br />").replaceAll("\n", "<br />");
-//        }
         this.content = content;
     }
 
@@ -125,14 +120,6 @@ public class Post extends AppDocument implements Comparable<Post> {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     @JSONProperty(ignore = true)
@@ -182,7 +169,7 @@ public class Post extends AppDocument implements Comparable<Post> {
     }
 
     public void setTagIds(List<String> tagIds) {
-        this.tagIds = tagIds;
+        this.tagIds = tagIds != null ? tagIds : new ArrayList<String>();
     }
 
     public int compareTo(Post o) {

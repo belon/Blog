@@ -91,7 +91,7 @@ public class BlogController {
 
     @RequestMapping("/admin/editPost")
     public ModelAndView showEditPostForm(@RequestParam("id") String id) {
-        ModelAndView modelAndView = new ModelAndView("admin/editPost", "post", blogService.getPost(id, true)).addObject("tags", blogService.getAvailableTags(false));
+        ModelAndView modelAndView = new ModelAndView("admin/editPost", "post", blogService.getPost(id, true)).addObject("tags", blogService.getAvailableTags(true));
 
         return modelAndView;
     }
@@ -103,13 +103,18 @@ public class BlogController {
 
     @RequestMapping("/admin/newTag/create")
     public ModelAndView createTag(HttpServletRequest request,
-                                  @RequestParam(value = "ajax", required = false) String ajax,
-                                  @ModelAttribute("tagObject") Tag tag,
-                                  BindingResult bindingResult) {
+            @RequestParam(value = "ajax", required = false) String ajax,
+            @ModelAttribute("tagObject") Tag tag,
+            BindingResult bindingResult) {
 
         blogService.createTag(tag);
 
-        return showNewPostForm();
+        Map response = new HashMap();
+        response.put("ok", true);
+        response.put("tagId", tag.getId());
+        response.put("tagName", tag.getName());
+
+        return JSONView.modelAndView(response);
     }
 
     /*
@@ -175,7 +180,6 @@ public class BlogController {
 
 
         validator.validate(post, bindingResult);
-//        ValidationUtils.invokeValidator(new CreatePostValidator(), post, bindingResult);
         if (bindingResult.hasErrors()) {
             if (ajax != null) {
                 Map m = new HashMap();
@@ -196,7 +200,6 @@ public class BlogController {
         if (ajax != null) {
             Map m = new HashMap();
             m.put("ok", true);
-            m.put("redirect", "app/index");
             return JSONView.modelAndView(m);
         } else {
             return new ModelAndView("redirect:/app/index");

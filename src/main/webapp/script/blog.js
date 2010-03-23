@@ -29,6 +29,7 @@ function submitForm(ev) {
                         $('#blogcontent').html(result.content);
                     } else {
                         LoadBlogContent();
+                        LoadTagStatistic();
                     }
                 } else { // Błędy walidacji
 
