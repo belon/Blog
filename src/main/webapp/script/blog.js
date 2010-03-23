@@ -49,7 +49,7 @@ function submitForm(ev) {
                         if (field.startsWith('global-error-')) { // globalne błędy walidacji
                             s += "<span class=\"error\">" + errors[field] + "</span>";
                         } else { // błędy walidacji przpisane do konkretnego pola
-                            $("#" + field, $form).after("<span id=\"" + field + "-errorField\" class=\"error\">" + errors[field] + "</span>");
+                            $("#" + field, $form).after("<div id=\"" + field + "-errorField\" class=\"error\">" + errors[field] + "</div>");
                         }
                     }
                     $container.append(s);

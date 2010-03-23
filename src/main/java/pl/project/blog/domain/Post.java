@@ -50,7 +50,7 @@ public class Post extends AppDocument implements Comparable<Post> {
         }
     }
 
-     /**
+    /**
      * Metoda zwraca true jeśli post został dodany
      * w danym dniu
      */
@@ -109,6 +109,22 @@ public class Post extends AppDocument implements Comparable<Post> {
         }
         // Zapisz w bazie wszystkie tagi
         for (String tagId : tagIds) {
+            saveTag(database, tagId);
+        }
+    }
+
+    @Override
+    public void afterUpdate(Database database) {
+        // Zapisz w bazie wszystkie tagi
+        for (String tagId : tagIds) {
+            if (!containTag(tagId)) {
+                saveTag(database, tagId);
+            }
+        }
+    }
+
+    private void saveTag(Database database, String tagId) {
+        if (tagId != null && !tagId.equalsIgnoreCase("null")) {
             // Zapisz relację pomiędzy tagiem a postem
             PostTag postTag = new PostTag();
             postTag.setPost_id(this.getId());
@@ -119,26 +135,7 @@ public class Post extends AppDocument implements Comparable<Post> {
             Tag tag = database.getDocument(Tag.class, tagId);
             tag.setCount(tag.getCount() + 1);
             database.updateDocument(tag);
-        }
-    }
-
-    @Override
-    public void afterUpdate(Database database) {
-        // Zapisz w bazie wszystkie tagi
-        for (String tagId : tagIds) {
-            if (!containTag(tagId)) {
-                // Zapisz relację pomiędzy tagiem a postem
-                PostTag postTag = new PostTag();
-                postTag.setPost_id(this.getId());
-                postTag.setTag_id(tagId);
-                database.createDocument(postTag);
-
-                // Zwiększ licznik częstości występowania w tagu
-                Tag tag = database.getDocument(Tag.class, tagId);
-                tag.setCount(tag.getCount() + 1);
-                database.updateDocument(tag);
-                addTag(tag);
-            }
+            addTag(tag);
         }
     }
 
