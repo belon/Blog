@@ -67,17 +67,17 @@
     
 	var enableGoToPage = false; // shows a drop down of all pages for go/jump to any page user want to go, if turned true. Useful incase there are large no. of pages
     
-    var textGoToPage = 'Go to'; // text for above option. You can change it to 'Jump to Page' or anything you like. The above option needs to turned on for this.
+        var textGoToPage = 'Go to'; // text for above option. You can change it to 'Jump to Page' or anything you like. The above option needs to turned on for this.
     
 	var enableSelectNoItems = false; // if you want to change items per page on the fly.
     
-    var textSelectNoItems = 'Items Per Page'; // text for above option. You can change it to 'Change No. of tag/page' or anything you like. The above option needs to turned on for this.
+        var textSelectNoItems = 'Items Per Page'; // text for above option. You can change it to 'Change No. of tag/page' or anything you like. The above option needs to turned on for this.
 
 	var paginatorValues = Array(5,10,15,20,25,30); // list of values for above option (enableSelectNoItems).
 
-    var anchorLink = '#' // javascript:void(0);'; // if you want to change href of the paginator anchor text (links for page) to '#' or to something else. As # is append on the address bar upon clicking I used javascript:void(); which is clean.
+        var anchorLink = '#';//'javascript:void(0);'; // if you want to change href of the paginator anchor text (links for page) to '#' or to something else. As # is append on the address bar upon clicking I used javascript:void(); which is clean.
     
-    var showIfSinglePage = false; // set it tp false if you don't want to show paginator incase there is only one page, true if show paginator even if there is just one page.
+        var showIfSinglePage = false; // set it tp false if you don't want to show paginator incase there is only one page, true if show paginator even if there is just one page.
 
 
 //-----------functions starts----------------------------------------------------

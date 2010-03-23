@@ -5,29 +5,27 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <style type="text/css">
-.paginator{
-    text-align:center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
-
-.active{
-    color:black;
-    border: solid 1px black;
-    padding:3px 5px;
-    margin:5px;
-    text-decoration:none;
-}
-
-.inactive{
-    color:gray;
-    cursor:default;
-    text-decoration:none;
-    border: solid 1px gray;
-    background-color: #0099FF;
-    padding:3px 5px;
-    margin:5px;
-}
+    .paginator{
+        text-align:center;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+    .active{
+        color:black;
+        border: solid 1px black;
+        padding:3px 5px;
+        margin:5px;
+        text-decoration:none;
+    }
+    .inactive{
+        color:gray;
+        cursor:default;
+        text-decoration:none;
+        border: solid 1px gray;
+        background-color: #0099FF;
+        padding:3px 5px;
+        margin:5px;
+    }
 </style>
 
 <div id="bloglist">
