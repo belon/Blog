@@ -67,6 +67,13 @@
                                     <li class="cat-item"><blog:link id="addPost" href="#">Dodaj post</blog:link></li>
                                 </security:authorize>
                             </ul>
+                            <h3>Wyszukiwarka</h3>
+                            <form:form id="searchForm" onsubmit="return loadSearch();">
+                                <div id="searchBar" style="padding: 10px;">
+                                <input id="searchPhrase" type="text" size="20"/>
+                                <input id="searchPhraseSubmit" type="submit" value="Szukaj"/>
+                                </div>
+                            </form:form>
                             <h3>Kalendarium</h3>
                             <div class="cal" id="cal-event">
                                 <a rel="prev" href="">Prev</a>

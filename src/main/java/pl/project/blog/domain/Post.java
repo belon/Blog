@@ -78,6 +78,12 @@ public class Post extends AppDocument implements Comparable<Post> {
         return false;
     }
 
+    public Boolean containPhrase(String search) {
+        if(content.toLowerCase().contains(search.toLowerCase().subSequence(0, search.length()-1)) || title.toLowerCase().contains(search.toLowerCase().subSequence(0, search.length()-1)))
+            return true;
+        return false;
+    }
+
     /**
      * Metoda zwraca true jeśli post zawiera tag
      * o podanym id.

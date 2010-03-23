@@ -1,7 +1,7 @@
 /**
  * This function loads post on the first page, starting at page page
  */
-function LoadBlogContent(page,tag,date) {
+function LoadBlogContent(page,tag,date,search) {
     if (getMetaData('showLoginForm')) {
         $.ajax({
             url: "/Blog/app/login",
@@ -21,6 +21,9 @@ function LoadBlogContent(page,tag,date) {
         }
         if (!(typeof date == "undefined")) {
             url = url + "?date="+date+"&ajax=1"
+        }
+        if (!(typeof search == "undefined")) {
+            url = url + "?search="+search+"&ajax=1"
         }
         $.ajax({
             url: url,
@@ -193,6 +196,22 @@ function ErrorBox(message) {
 
     });
     $dialog.dialog('open');
+}
+
+function loadSearch() {
+           var s = $("#searchPhrase").attr("value");
+
+           $.ajax({
+             url: "/Blog/app/bloglist?search="+s+"&ajax=1",
+             success: function(data) {
+                 $('#blogcontent').html(data);
+             },
+             error: function(data) {
+                 ErrorBox(data);
+             }
+           });
+           
+           return false;
 }
 
 function MessageBox(message) {

@@ -267,7 +267,8 @@ public class BlogController {
     public String showBlogList(
             ModelMap model,
             @RequestParam(value = "tagId", required = false) String tagId,
-            @RequestParam(value = "date", required = false) String date) {
+            @RequestParam(value = "date", required = false) String date,
+            @RequestParam(value = "search", required = false) String search) {
 
         List<Post> posts = new ArrayList<Post>();
 
@@ -280,6 +281,12 @@ public class BlogController {
         } else if (date != null) {
             for (Post post : blogService.listPosts(true)) {
                 if (post.isFromDate(date)) {
+                    posts.add(post);
+                }
+            }
+        } else if(search != null) {
+            for (Post post : blogService.listPosts(true)) {
+                if(post.containPhrase(search)) {
                     posts.add(post);
                 }
             }
