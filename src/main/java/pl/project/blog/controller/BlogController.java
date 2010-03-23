@@ -200,7 +200,7 @@ public class BlogController {
             post.setModifyDate(new Date());
             post.setTags(postOld.getTags());
             blogService.updatePost(post);
-            
+
             response.put("ok", true);
         }
         return JSONView.modelAndView(response);
