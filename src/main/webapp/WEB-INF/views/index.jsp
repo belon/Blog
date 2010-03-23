@@ -42,9 +42,8 @@
                         <div id="topnav">
                             <ul class="lavaLampWithImage" id="1">
                                 <li class="current"><blog:link href="/app/index">Home</blog:link></li>
-                                <li><a href="#">Styles</a></li>
-                                <li><a href="#">Notes</a></li>
-                                <li><a href="#">Credits</a></li>
+                                <li><a href="#">O Blogu</a></li>
+                                <li><a href="#">Księga Gości</a></li>
                             </ul>
                         </div>
                     </div>
@@ -71,13 +70,13 @@
                                 </security:authorize>
                             </ul>
                             <h3>Tagi</h3>
-                            <div id="tagStatistic">
+                            <div id="tagStatistic" style="padding: 10px;">
                             </div>
                         </div>
                         <div class="clear"></div>
                     </div>
 
-                    <div id="footer"> Copyright &copy; Yoursitename.com
+                    <div id="footer"> Copyright &copy; Blogus.com
                         <div class="credit"><a href="http://ramblingsoul.com">CSS Template</a> by ramblingsoul</div>
                     </div>
                 </div>

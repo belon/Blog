@@ -189,7 +189,7 @@ $(function() {
     LoadTagStatistic();
     LoadPostForm();
     LoadLoginForm();
-
+    
     // Kolorowanie składni
     SyntaxHighlighter.config.stripBrs = true;
     SyntaxHighlighter.all();
