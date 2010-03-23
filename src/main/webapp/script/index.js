@@ -30,7 +30,15 @@ function LoadBlogContent(page,tag,date) {
 
                 // dodanie linków do 'Pokaż komentarze'
                 $('#blogcontent .comments_link a').click(function() {
-                    ReloadPosts(this);
+                    var elem = $(this);
+                    if (elem.hasClass("visible")) {
+                        elem.parents('.post').find('.comments').hide();
+                        elem.text("Pokaż komentarze");
+                        elem.removeClass("visible");
+                    } else {
+                        ReloadPosts(this);
+                        elem.parents('.post').find('.comments').show();
+                    }
                 });
 
                 // dodanie linków do 'Edytuj post'
@@ -363,6 +371,8 @@ function ReloadPosts(item) {
             postElem.find('.gravatar').attr("src", function () {
                 return getGravatarFor($(this).attr("src"));
             });
+            $(item).text("Ukryj komentarze");
+            $(item).addClass("visible");
         }
     });
 
