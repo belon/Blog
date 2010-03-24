@@ -73,7 +73,7 @@ a:hover {color:#036; text-decoration:none;}
 #sidebar li a:hover {background:url(../images/sidemenuhover2.jpg) 2px 2px no-repeat; color:#000;}
 #sidebar h3 {display:block; font: 1.5em "Trebuchet MS", Arial, Halvetica, sans-serif ; color:#333; padding:5px 5px 0 8px;}
 #sidebar .cat-item { height:26px; padding:0!important;}
-#sidebar .cat-item a {display:block; height:20px; padding:5px 10px 0 20px; border-bottom: solid 1px #A4BBDD; background:url(images/sidemenunrml.jpg) 2px 5px no-repeat; color:#333; }
+#sidebar .cat-item a {display:block; height:20px; padding:5px 10px 0 20px; border-bottom: solid 1px #A4BBDD; background:url(../images/sidemenunrml.jpg) 2px 5px no-repeat; color:#333; }
 #sidebar .cat-item a:visited, #sidebar .cat-item a:active {color:#333;}
 #sidebar .cat-item a:hover {background:url(../images/sidemenuhover.jpg) no-repeat; color:#fff;}
 

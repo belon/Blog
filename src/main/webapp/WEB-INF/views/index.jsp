@@ -43,8 +43,8 @@
                         <div id="headercontent"><span id="sitename">Blog</span></div>
                         <div id="topnav">
                             <ul class="lavaLampWithImage" id="l1">
-                                <li class="current"><blog:link href="/app/index">Home</blog:link></li>
-                                <li><a href="#">O Blogu</a></li>
+                                <li class="current"><a href="/Blog/app/index">Strona główna</a></li>
+                                <li><a href="#" id="about">O Blogu</a></li>
                                 <li><a href="#">Księga Gości</a></li>
                             </ul>
                         </div>
@@ -70,8 +70,8 @@
                             <h3>Wyszukiwarka</h3>
                             <form:form id="searchForm" onsubmit="return loadSearch();">
                                 <div id="searchBar" style="padding: 10px;">
-                                <input id="searchPhrase" type="text" size="20"/>
-                                <input id="searchPhraseSubmit" type="submit" value="Szukaj"/>
+                                    <input id="searchPhrase" type="text" size="20"/>
+                                    <input id="searchPhraseSubmit" type="submit" value="Szukaj"/>
                                 </div>
                             </form:form>
                             <h3>Kalendarium</h3>
@@ -84,12 +84,16 @@
                                         <tr><th class="weekend">Nie</th><th>Pon</th><th>Wto</th><th>Śro</th><th>Czw</th><th>Pią</th><th class="weekend">Sob</th></tr>
                                     </thead>
                                     <tbody>
-                                        <tr><td class="weekend out"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
-                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
-                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
-                                        <tr><td class="weekend"><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td><a href=""></a></td><td class="weekend"><a href=""></a></td></tr>
-                                        <tr><td class="weekend"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="weekend out"><a href=""></a></td></tr>
-                                        <tr><td class="weekend out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="out"><a href=""></a></td><td class="weekend out"><a href=""></a></td></tr>
+                                        <c:forEach begin="0" end="5" step="1" var="i">
+                                            <tr>
+                                                <c:forEach begin="0" end="6" step="1" var="j">
+                                                    <c:choose>
+                                                        <c:when test="${j == 0 || j == 6}"><td class="weekend"><a href="#"></a></td></c:when>
+                                                        <c:otherwise><td><a href="#"></a></td></c:otherwise>
+                                                    </c:choose>
+                                                </c:forEach>
+                                            </tr>
+                                        </c:forEach>
                                     </tbody>
                                 </table>
                             </div>

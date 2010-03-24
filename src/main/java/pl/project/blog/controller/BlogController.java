@@ -284,9 +284,9 @@ public class BlogController {
                     posts.add(post);
                 }
             }
-        } else if(search != null) {
+        } else if (search != null) {
             for (Post post : blogService.listPosts(true)) {
-                if(post.containPhrase(search)) {
+                if (post.containPhrase(search)) {
                     posts.add(post);
                 }
             }
@@ -330,5 +330,10 @@ public class BlogController {
         model.addAttribute("tags", blogService.getAvailableTags(true));
 
         return "taglist";
+    }
+
+    @RequestMapping("/about")
+    public String showAbout(ModelMap model) {
+        return "about";
     }
 }

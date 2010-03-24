@@ -16,7 +16,7 @@
     font-size:1.5em;
     text-align:center
 }
-.cal a[rel=prev], a[rel=next] { 
+.cal a[rel=prev], a[rel=next] {
     display:block;
     margin:0.3em 1em;
     overflow:hidden;
@@ -59,18 +59,17 @@
 .cal tbody td {
     text-align:center;
     vertical-align:middle;
-    height: 15px;
 }
 .cal tbody a {
     display:block;
     width:100%;
-    line-height:280%
+    line-height:200%
 }
 .cal td.out {
     background:#f8f8f8;
     font-family:Arial
 }
-.cal td.out a { 
+.cal td.out a {
     color:#aaa
 }
 .cal .weekend {
@@ -94,7 +93,8 @@
 .cal td.today {
     font-weight:bold;
     border:solid 1px red
-} .cal td.today a, .cal a[rel=today]{
-    color:Red
+}
+.cal td.today a, .cal a[rel=today]{
+    color:red
 }
 

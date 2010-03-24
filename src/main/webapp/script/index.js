@@ -187,6 +187,22 @@ function LoadLoginForm(page) {
     });
 }
 
+function LoadAboutPage(page) {
+    $('#blogcontent').empty();
+
+    $('#about').click(function() {
+        $.ajax({
+            url: "/Blog/app/about",
+            success: function(data) {
+                $('#blogcontent').html(data);
+            },
+            error: function(data) {
+                ErrorBox(data);
+            }
+        });
+    });
+}
+
 var infoDialog = null;
 
 function ErrorBox(message) {
@@ -266,7 +282,7 @@ $(function() {
         }
     });
 
-    $().ready(function () {
+    $(function () {
         $("#cal-event").calendar({
             dateChanged: function (date) {
                 $.ajax({
@@ -302,7 +318,8 @@ $(function() {
     LoadTagStatistic();
     LoadPostForm();
     LoadLoginForm();
-    
+    LoadAboutPage();
+
     // Kolorowanie składni
     SyntaxHighlighter.config.stripBrs = true;
     SyntaxHighlighter.all();

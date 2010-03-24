@@ -64,6 +64,15 @@
             </div>
         </div>
     </c:forEach>
+        <c:if test="${empty posts}">
+        <div class="post">
+            <div class="postheader"></div>
+            <div class="postcontent">
+                <div style="text-align: center"><h1>Brak postów do wyświetlenia</h1></div>
+            </div>
+            <div class="postbottom"></div>
+        </div>
+    </c:if>
 </div>
 
 <script type="text/javascript">
