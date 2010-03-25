@@ -25,6 +25,10 @@ public class Comment extends AppDocument implements Comparable<Comment> {
         this.author = author;
     }
 
+    public void replaceNewLines() {
+        setContent(getContent().replaceAll("\n", "<br/>"));
+    }
+
     public String getContent() {
         return content;
     }
@@ -37,7 +41,7 @@ public class Comment extends AppDocument implements Comparable<Comment> {
         return created;
     }
 
-    @JSONConverter(type=DateConverter.class)
+    @JSONConverter(type = DateConverter.class)
     public void setCreated(Date created) {
         this.created = created;
     }

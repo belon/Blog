@@ -79,8 +79,9 @@ public class Post extends AppDocument implements Comparable<Post> {
     }
 
     public Boolean containPhrase(String search) {
-        if(content.toLowerCase().matches(".*"+search.toLowerCase()+".*") || title.toLowerCase().matches(".*"+search.toLowerCase()+".*"))
+        if (content.toLowerCase().matches(".*" + search.toLowerCase() + ".*") || title.toLowerCase().matches(".*" + search.toLowerCase() + ".*")) {
             return true;
+        }
         return false;
     }
 
@@ -137,6 +138,10 @@ public class Post extends AppDocument implements Comparable<Post> {
             database.updateDocument(tag);
             addTag(tag);
         }
+    }
+
+    public void replaceNewLines() {
+        setContent(getContent().replaceAll("\n", "<br/>"));
     }
 
     public String getContent() {

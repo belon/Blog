@@ -151,6 +151,7 @@ public class BlogController {
         }
 
         comment.setCreated(new Date());
+        comment.replaceNewLines();
         blogService.createComment(comment);
 
         if (ajax != null) {
@@ -195,6 +196,7 @@ public class BlogController {
         }
 
         post.setCreateDate(new Date());
+        post.replaceNewLines();
         blogService.createPost(post);
 
         if (ajax != null) {

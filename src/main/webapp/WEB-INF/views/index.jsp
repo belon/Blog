@@ -45,7 +45,6 @@
                             <ul class="lavaLampWithImage" id="l1">
                                 <li class="current"><a href="/Blog/app/index">Strona główna</a></li>
                                 <li><a href="#" id="about">O Blogu</a></li>
-                                <li><a href="#">Księga Gości</a></li>
                             </ul>
                         </div>
                     </div>
@@ -76,8 +75,8 @@
                             </form:form>
                             <h3>Kalendarium</h3>
                             <div class="cal" id="cal-event">
-                                <a rel="prev" href="">Prev</a>
-                                <a rel="next" href="">Next</a>
+                                <a rel="prev" href="#">Prev</a>
+                                <a rel="next" href="#">Next</a>
                                 <h3 class="month"></h3>
                                 <table cellspacing="0">
                                     <thead>

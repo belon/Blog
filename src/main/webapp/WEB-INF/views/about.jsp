@@ -46,9 +46,9 @@
         </table>
         <blockquote>
         <p>
-            Projekt powstał na zaliczenie ćwiczeń z przedmiotu <cite>Metody
+            Projekt powstał na zaliczenie laboratorium z przedmiotu <cite>Metody
             utrwalania danych w językach Ruby i Java</cite>. Wykorzystuje
-            najnowszą technologię utrwalania.
+            najnowszą technologię utrwalania jaką jest CouchDB.
         </p>
         </blockquote>
     </div>
