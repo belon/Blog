@@ -17,21 +17,22 @@
     </head>
 
     <body>
-        <form action="${pageContext.request.contextPath}/app/admin/delPost/ok"
+        <form id="delPostForm" action="${pageContext.request.contextPath}/app/admin/delPost/ok"
               method="POST">
             <input type="hidden" value="${post.id}" name="id"/>
             <p>
-                Usunąć post &quot;<c:out value="${post.title}"/>&quot;?
+                Czy na pewno chcesz usunąć post zatytułowany &quot;<c:out value="${post.title}"/>&quot;?
             </p>
-            <p>
-                <input id="cancel"
-                       type="submit"
-                       name="cancel"
-                       value="Nie"/>
+            <br/><hr/><br/>
+            <p style="text-align: center;">
                 <input id="ok"
                        type="submit"
                        name="ok"
                        value="Tak"/>
+                <input id="cancel"
+                       type="submit"
+                       name="cancel"
+                       value="Nie"/>
             </p>
         </form>
     </body>

@@ -79,7 +79,7 @@ public class Post extends AppDocument implements Comparable<Post> {
     }
 
     public Boolean containPhrase(String search) {
-        if(content.toLowerCase().contains(search.toLowerCase().subSequence(0, search.length()-1)) || title.toLowerCase().contains(search.toLowerCase().subSequence(0, search.length()-1)))
+        if(content.toLowerCase().matches(".*"+search.toLowerCase()+".*") || title.toLowerCase().matches(".*"+search.toLowerCase()+".*"))
             return true;
         return false;
     }

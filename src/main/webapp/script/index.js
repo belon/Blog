@@ -152,7 +152,7 @@ function LoadPostForm(page) {
                                 },
                                 messages: {
                                     name: {
-                                        required: 'Nazwa jest wymagana'
+                                        required: 'Podaj nazwę tagu'
                                     }
                                 }
                             });
@@ -260,7 +260,7 @@ function simpleMessageBox(message) {
     .html(message)
     .dialog({
         modal: true,
-        title: 'Info'
+        title: 'Usuń post'
     });
 }
 

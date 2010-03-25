@@ -7,8 +7,6 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 
-<br/><hr/><br/>
-
         <form:form
             id = "addCommentForm"
             action = "${pageContext.request.contextPath}/app/addComment/create"
@@ -19,7 +17,7 @@
             <div id = "errorContainer"></div>
 
             <form:input path = "post_id" name = "post_id" id = "post_id" type="hidden" value="<%= request.getParameter("id") %>" />
-            <div style="padding-left: 50px;background-repeat: no-repeat; background-position: left" id="gravatarnew">
+            <div style="margin-right: 35px; background-repeat: no-repeat; background-position: right" id="gravatarnew">
             <p style="padding:5px">
                 <label class="commentlabel" for = "author">Autor</label>
                 <form:input path = "author" size = "22" /><br/>
@@ -33,7 +31,7 @@
             </div>
             <p style="padding:5px">
                 <label class="commentlabel" for = "content">Treść</label>
-                <form:textarea path = "content" cols = "55" rows = "10" style = "background-color: white;" /><br/>
+                <form:textarea path = "content" cols = "60" rows = "10" style = "background-color: white;" /><br/>
                 <form:errors path = "content" cssClass = "error" />
             </p>
 <%--            <p style="margin-left: 4em;">
